@@ -10,8 +10,8 @@ class Title extends React.Component{
 
   render(){
     return(
-        <Container fluid={true} className="title-container">
-          <Row fluid={true}>
+        <Container className="title-container">
+          <Row fluid="true">
             <Col xs={2} md={3}>
               <img src={fau_logo} alt="FAU Logo" className="image-logo"/>
             </Col>

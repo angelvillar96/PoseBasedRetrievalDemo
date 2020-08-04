@@ -3,7 +3,8 @@ import './App.css';
 
 // self defined components
 import Title from './titles/title.js'
-import DropFile from "./inputs/input_img"
+import Separator from './titles/separator.js'
+import InputArea from "./inputs/input_area.js"
 
 function App() {
   return (
@@ -11,7 +12,11 @@ function App() {
       <header className="App-header">
       </header>
       <Title/>
-      <DropFile/>
+      <Separator title="Input"/>
+      <InputArea/>
+      <Separator title="Results"/>
+      <Separator/>
+      <Separator/>
     </div>
   );
 }

@@ -1,0 +1,54 @@
+
+/*#########################
+## Styles for the Input Area
+#########################*/
+.input_area{
+  position: relative;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 10%;
+  font-size: 1em;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons_area{
+  padding-top: 10%;
+  margin: 0 auto !important;
+}
+
+/*#########################
+## Styles for the Drop Area
+#########################*/
+.dropZoneOverlay, .FileUpload {
+  width: 100%;
+  height: 200px !important;
+  border-radius: 10px !important;
+  border: 2px dashed rgb(0, 0, 0) !important;
+}
+
+.dropZoneOverlay {
+  border: dotted 1px;
+  /* background: url("../img/img_icon.png") no-repeat; */
+  position: absolute;
+  top: 0px;
+  text-align: center;
+}
+.dropZoneOverlay.background{
+  opacity: 0.65;
+}
+
+.FileUpload {
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.dropZoneText{
+  padding-left: 00%;
+  padding-top: 15%;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}

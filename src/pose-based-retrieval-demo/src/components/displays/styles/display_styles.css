@@ -1,0 +1,8 @@
+
+.img_display{
+  width: 80%;
+  margin-left: 20%;
+  height: 400px !important;
+  border-radius: 10px !important;
+  border: 2px solid rgb(0, 0, 0) !important;
+}

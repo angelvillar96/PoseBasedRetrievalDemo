@@ -1,5 +1,8 @@
 import React from "react"
-// import Text from "./text_display.js"
+
+import Text from "../titles/text_display.js"
+
+import "./styles/input_styles.css"
 
 class DropFile extends React.Component{
 
@@ -47,8 +50,7 @@ class DropFile extends React.Component{
         <input type="file" id="drop_zone" className="FileUpload" accept=".jpg,.png,.jpeg,.gif" onChange={this.on_change}/>
         <div className="dropZoneOverlay">
           <div className="dropZoneText">
-            TODO
-            {/*<Text text_display={this.state.message}/>*/}
+            <Text text_display={this.state.message}/>
           </div>
         </div>
       </div>
