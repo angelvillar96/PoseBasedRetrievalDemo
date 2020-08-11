@@ -38,8 +38,15 @@ class InputArea extends React.Component{
                           file_name={this.state.file_name}/>
             </Row>
             <Row className="buttons_area">
-              <InputImg className="myButton" update_state={this.update_state}/>
-              <Button className="myButton" variant="primary">Process Image</Button>
+              <Col sm={1} md={1}></Col>
+              <Col sm={4} md={4}>
+                <InputImg className="myButton" update_state={this.update_state}/>
+              </Col>
+              <Col sm={1} md={2}></Col>
+              <Col sm={4} md={4}>
+                <Button className="myButton" variant="primary">Process Image</Button>
+              </Col>
+              <Col sm={1} md={1}></Col>
             </Row>
           </Col>
           <Col md={2}>

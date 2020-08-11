@@ -40,12 +40,10 @@ class ImgDisplay extends React.Component{
 
   render(){
     this.refresh()
-    console.log(this.state.file_url)
-
     return(
       <div className="img_display_area">
         <div>
-          <Text text_display={this.state.file_name}/>
+          <Text text_display={this.state.file_name} font_size="1.6em" font_style="normal"/>
         </div>
         <div className="img_display" style={{backgroundImage: "url("+this.state.file+")"}}>
         </div>
