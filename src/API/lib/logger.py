@@ -29,7 +29,6 @@ def log_function(func):
                 raise e
             message = traceback.format_exc()
             print_(message, message_type="error")
-            exit()
     return try_call_log
 
 

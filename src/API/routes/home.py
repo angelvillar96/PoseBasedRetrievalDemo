@@ -4,7 +4,7 @@ from flasgger import swag_from
 
 from schemas.home import HomeSchema
 from models.home import HomeModel
-from lib.logger import print_
+from lib.logger import log_function, print_
 
 home_api = Blueprint('api', __name__)
 
@@ -17,6 +17,7 @@ home_api = Blueprint('api', __name__)
         }
     }
 })
+@log_function
 def home():
     """
     Check if API is online

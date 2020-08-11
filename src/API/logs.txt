@@ -24,3 +24,416 @@
 2020-08-11-12:45:27    INFO: Calling: create_app...
 2020-08-11-12:45:29    INFO: Route '/api' was callied...
 2020-08-11-12:45:29    INFO: {'message': 'Retrieval Demo API is running!'}
+2020-08-11-12:49:38    INFO: Route '/api/upload' was callied...
+
+
+
+2020-08-11-12:51:12    START: Starting API...
+2020-08-11-12:51:12    INFO: Calling: create_app...
+2020-08-11-12:51:30    INFO: Calling: receive_data...
+2020-08-11-12:51:30    INFO: Route '/api/upload' was callied...
+2020-08-11-12:51:30    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 46, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-12:51:53    START: Starting API...
+2020-08-11-12:51:53    INFO: Calling: create_app...
+2020-08-11-12:51:57    INFO: Calling: receive_data...
+2020-08-11-12:51:57    INFO: Route '/api/upload' was callied...
+2020-08-11-12:51:57    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 46, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+2020-08-11-12:52:04    INFO: Calling: home...
+2020-08-11-12:52:04    INFO: Route '/api' was callied...
+2020-08-11-12:52:04    INFO: {'message': 'Retrieval Demo API is running!'}
+
+
+
+2020-08-11-13:37:50    START: Starting API...
+2020-08-11-13:37:50    INFO: Calling: create_app...
+2020-08-11-13:38:07    INFO: Calling: receive_data...
+2020-08-11-13:38:07    INFO: Route '/api/upload' was callied...
+2020-08-11-13:38:07    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 51, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-13:45:28    START: Starting API...
+2020-08-11-13:45:28    INFO: Calling: create_app...
+2020-08-11-13:45:37    INFO: Calling: receive_data...
+2020-08-11-13:45:37    INFO: Route '/api/upload' was callied...
+2020-08-11-13:45:37    INFO: Calling: setup_detector...
+2020-08-11-13:45:37    INFO: Initializing Person Detector
+2020-08-11-13:46:08    INFO: Loading detector pretrained parameters
+2020-08-11-13:46:08    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 32, in setup_detector
+    pretrained_path = os.path.join(os.getcwd(), "resources", "coco_person_detector.pth")
+NameError: name 'os' is not defined
+
+2020-08-11-13:46:08    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-13:46:37    START: Starting API...
+2020-08-11-13:46:37    INFO: Calling: create_app...
+2020-08-11-13:46:41    INFO: Calling: receive_data...
+2020-08-11-13:46:41    INFO: Route '/api/upload' was callied...
+2020-08-11-13:46:41    INFO: Calling: setup_detector...
+2020-08-11-13:46:41    INFO: Initializing Person Detector
+2020-08-11-13:46:43    INFO: Loading detector pretrained parameters
+2020-08-11-13:46:43    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 35, in setup_detector
+    checkpoint = torch.load(pretrained_path)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/serialization.py", line 387, in load
+    return _load(f, map_location, pickle_module, **pickle_load_args)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/serialization.py", line 574, in _load
+    result = unpickler.load()
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/serialization.py", line 537, in persistent_load
+    deserialized_objects[root_key] = restore_location(obj, location)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/serialization.py", line 119, in default_restore_location
+    result = fn(storage, location)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/serialization.py", line 95, in _cuda_deserialize
+    device = validate_cuda_device(location)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/serialization.py", line 79, in validate_cuda_device
+    raise RuntimeError('Attempting to deserialize object on a CUDA '
+RuntimeError: Attempting to deserialize object on a CUDA device but torch.cuda.is_available() is False. If you are running on a CPU-only machine, please use torch.load with map_location='cpu' to map your storages to the CPU.
+
+2020-08-11-13:46:43    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-13:47:09    START: Starting API...
+2020-08-11-13:47:09    INFO: Calling: create_app...
+2020-08-11-13:47:10    INFO: Calling: receive_data...
+2020-08-11-13:47:10    INFO: Route '/api/upload' was callied...
+2020-08-11-13:47:10    INFO: Calling: setup_detector...
+2020-08-11-13:47:10    INFO: Initializing Person Detector
+2020-08-11-13:47:12    INFO: Loading detector pretrained parameters 
+2020-08-11-13:47:16    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+2020-08-11-13:49:53    START: Starting API...
+2020-08-11-13:49:53    INFO: Calling: create_app...
+2020-08-11-13:49:54    INFO: Calling: receive_data...
+2020-08-11-13:49:54    INFO: Route '/api/upload' was callied...
+2020-08-11-13:49:54    INFO: Calling: setup_detector...
+2020-08-11-13:49:54    INFO: Initializing Person Detector
+2020-08-11-13:49:55    INFO: Loading detector pretrained parameters 
+2020-08-11-13:49:56    INFO: Calling: person_detection...
+2020-08-11-13:49:56    INFO: (183, 275, 3)
+2020-08-11-13:49:56    INFO: Computing forward pass through person detector
+2020-08-11-13:49:56    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 56, in person_detection
+    outputs = self.model(img / 255)
+NameError: name 'self' is not defined
+
+2020-08-11-13:49:56    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-13:50:35    START: Starting API...
+2020-08-11-13:50:35    INFO: Calling: create_app...
+2020-08-11-13:50:37    INFO: Calling: receive_data...
+2020-08-11-13:50:37    INFO: Route '/api/upload' was callied...
+2020-08-11-13:50:37    INFO: Calling: setup_detector...
+2020-08-11-13:50:37    INFO: Initializing Person Detector
+2020-08-11-13:50:39    INFO: Loading detector pretrained parameters 
+2020-08-11-13:50:39    INFO: Calling: person_detection...
+2020-08-11-13:50:39    INFO: torch.Size([183, 275, 3])
+2020-08-11-13:50:39    INFO: Computing forward pass through person detector
+2020-08-11-13:50:39    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 57, in person_detection
+    outputs = model(img / 255)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 140, in forward
+    return self.module(*inputs, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/generalized_rcnn.py", line 47, in forward
+    images, targets = self.transform(images, targets)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/transform.py", line 38, in forward
+    "of shape [C, H, W], got {}".format(image.shape))
+ValueError: images is expected to be a list of 3d tensors of shape [C, H, W], got torch.Size([275, 3])
+
+2020-08-11-13:50:39    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-13:51:05    START: Starting API...
+2020-08-11-13:51:05    INFO: Calling: create_app...
+2020-08-11-13:51:10    INFO: Calling: receive_data...
+2020-08-11-13:51:10    INFO: Route '/api/upload' was callied...
+2020-08-11-13:51:10    INFO: Calling: setup_detector...
+2020-08-11-13:51:10    INFO: Initializing Person Detector
+2020-08-11-13:51:11    INFO: Loading detector pretrained parameters 
+2020-08-11-13:51:11    INFO: Calling: person_detection...
+2020-08-11-13:51:12    INFO: torch.Size([1, 3, 183, 275])
+2020-08-11-13:51:12    INFO: Computing forward pass through person detector
+2020-08-11-13:51:12    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 57, in person_detection
+    outputs = model(img / 255)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 140, in forward
+    return self.module(*inputs, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/generalized_rcnn.py", line 47, in forward
+    images, targets = self.transform(images, targets)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/transform.py", line 41, in forward
+    images[i] = image
+RuntimeError: The expanded size of the tensor (275) must match the existing size (1202) at non-singleton dimension 2.  Target sizes: [3, 183, 275].  Tensor sizes: [3, 800, 1202]
+
+2020-08-11-13:51:12    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+2020-08-11-14:59:35    INFO: Calling: receive_data...
+2020-08-11-14:59:35    INFO: Route '/api/upload' was callied...
+2020-08-11-14:59:36    INFO: Calling: person_detection...
+2020-08-11-14:59:37    INFO: torch.Size([1, 3, 2511, 3806])
+2020-08-11-14:59:37    INFO: Computing forward pass through person detector
+2020-08-11-14:59:43    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 57, in person_detection
+    outputs = model(img / 255)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 140, in forward
+    return self.module(*inputs, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/generalized_rcnn.py", line 47, in forward
+    images, targets = self.transform(images, targets)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/transform.py", line 41, in forward
+    images[i] = image
+RuntimeError: The expanded size of the tensor (3806) must match the existing size (1212) at non-singleton dimension 2.  Target sizes: [3, 2511, 3806].  Tensor sizes: [3, 800, 1212]
+
+2020-08-11-14:59:43    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-15:04:11    START: Starting API...
+2020-08-11-15:04:11    INFO: Calling: create_app...
+2020-08-11-15:04:15    INFO: Calling: receive_data...
+2020-08-11-15:04:15    INFO: Route '/api/upload' was callied...
+2020-08-11-15:04:15    INFO: Calling: setup_detector...
+2020-08-11-15:04:15    INFO: Initializing Person Detector
+2020-08-11-15:04:19    INFO: Loading detector pretrained parameters 
+2020-08-11-15:04:25    INFO: Calling: person_detection...
+2020-08-11-15:04:26    INFO: torch.Size([1, 3, 2511, 3806])
+2020-08-11-15:04:26    INFO: Computing forward pass through person detector
+2020-08-11-15:04:27    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 57, in person_detection
+    outputs = model(img / 255)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 140, in forward
+    return self.module(*inputs, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/generalized_rcnn.py", line 47, in forward
+    images, targets = self.transform(images, targets)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/transform.py", line 41, in forward
+    images[i] = image
+RuntimeError: The expanded size of the tensor (3806) must match the existing size (1212) at non-singleton dimension 2.  Target sizes: [3, 2511, 3806].  Tensor sizes: [3, 800, 1212]
+
+2020-08-11-15:04:27    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-15:06:06    START: Starting API...
+2020-08-11-15:06:06    INFO: Calling: create_app...
+2020-08-11-15:06:13    INFO: Calling: receive_data...
+2020-08-11-15:06:13    INFO: Route '/api/upload' was callied...
+2020-08-11-15:06:13    INFO: Calling: setup_detector...
+2020-08-11-15:06:13    INFO: Initializing Person Detector
+2020-08-11-15:07:07    INFO: Calling: person_detection...
+2020-08-11-15:07:07    INFO: torch.Size([1, 3, 2511, 3806])
+2020-08-11-15:07:07    INFO: Computing forward pass through person detector
+2020-08-11-15:07:07    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 57, in person_detection
+    outputs = model(img / 255)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 140, in forward
+    return self.module(*inputs, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/generalized_rcnn.py", line 47, in forward
+    images, targets = self.transform(images, targets)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/transform.py", line 41, in forward
+    images[i] = image
+RuntimeError: The expanded size of the tensor (3806) must match the existing size (1212) at non-singleton dimension 2.  Target sizes: [3, 2511, 3806].  Tensor sizes: [3, 800, 1212]
+
+2020-08-11-15:07:07    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-15:07:49    START: Starting API...
+2020-08-11-15:07:49    INFO: Calling: create_app...
+2020-08-11-15:07:52    INFO: Calling: receive_data...
+2020-08-11-15:07:52    INFO: Route '/api/upload' was callied...
+2020-08-11-15:07:52    INFO: Calling: setup_detector...
+2020-08-11-15:07:52    INFO: Initializing Person Detector
+2020-08-11-15:07:53    INFO: Loading detector pretrained parameters 
+2020-08-11-15:07:54    INFO: Calling: person_detection...
+2020-08-11-15:07:54    INFO: torch.Size([3, 2511, 3806])
+2020-08-11-15:07:54    INFO: Computing forward pass through person detector
+2020-08-11-15:07:54    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 58, in person_detection
+    outputs = model(img / 255)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 140, in forward
+    return self.module(*inputs, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/generalized_rcnn.py", line 47, in forward
+    images, targets = self.transform(images, targets)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/transform.py", line 38, in forward
+    "of shape [C, H, W], got {}".format(image.shape))
+ValueError: images is expected to be a list of 3d tensors of shape [C, H, W], got torch.Size([2511, 3806])
+
+2020-08-11-15:07:54    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+
+
+
+
+2020-08-11-15:08:11    START: Starting API...
+2020-08-11-15:08:11    INFO: Calling: create_app...
+2020-08-11-15:08:12    INFO: Calling: receive_data...
+2020-08-11-15:08:12    INFO: Route '/api/upload' was callied...
+2020-08-11-15:08:12    INFO: Calling: setup_detector...
+2020-08-11-15:08:12    INFO: Initializing Person Detector
+2020-08-11-15:08:14    INFO: Loading detector pretrained parameters 
+2020-08-11-15:08:14    INFO: Calling: person_detection...
+2020-08-11-15:08:14    INFO: torch.Size([1, 3, 2511, 3806])
+2020-08-11-15:08:14    INFO: Computing forward pass through person detector
+2020-08-11-15:08:15    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/person_detection.py", line 57, in person_detection
+    outputs = model(img / 255)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 140, in forward
+    return self.module(*inputs, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/generalized_rcnn.py", line 47, in forward
+    images, targets = self.transform(images, targets)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/angel/miniconda3/lib/python3.7/site-packages/torchvision/models/detection/transform.py", line 41, in forward
+    images[i] = image
+RuntimeError: The expanded size of the tensor (3806) must match the existing size (1212) at non-singleton dimension 2.  Target sizes: [3, 2511, 3806].  Tensor sizes: [3, 800, 1212]
+
+2020-08-11-15:08:15    ERROR: Traceback (most recent call last):
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/lib/logger.py", line 26, in try_call_log
+    return func(*args, **kwargs)
+  File "/home/angel/Dropbox/Angel Villar Corrales/Telecos/8-Fourth Master Semester/MasterThesis/RetrievalDemo/src/API/routes/upload.py", line 59, in receive_data
+    return response, 200
+NameError: name 'response' is not defined
+

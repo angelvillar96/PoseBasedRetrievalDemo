@@ -9,6 +9,7 @@ __pycache__/
 # my ignores
 src/API/data
 resources
+logs.txt
 
 # Distribution / packaging
 .Python
