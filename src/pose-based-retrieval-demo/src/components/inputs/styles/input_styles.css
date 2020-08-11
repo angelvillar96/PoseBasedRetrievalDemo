@@ -18,6 +18,10 @@
   margin: 0 auto !important;
 }
 
+.myButton{
+  margin: auto;
+}
+
 /*#########################
 ## Styles for the Drop Area
 #########################*/
