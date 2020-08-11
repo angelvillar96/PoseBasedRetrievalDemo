@@ -13,7 +13,10 @@ from flasgger import Swagger
 
 from routes.home import home_api
 from routes.upload import upload_api
+from lib.logger import Logger, log_function, print_
 
+
+@log_function
 def create_app():
     """
     Initialization of the API
@@ -38,6 +41,11 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--port', default=5000, type=int, help='port to listen on')
     args = parser.parse_args()
     port = args.port
+
+    # Initializing logger
+    logger = Logger(exp_path=os.getcwd())
+    message = f"Starting API..."
+    logger.log_info(message=message, message_type="start")
 
     app = create_app()
 
