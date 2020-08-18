@@ -19,19 +19,22 @@ class ImgDisplay extends React.Component{
 
   // updating the display if the state has change
   refresh(){
-    if(this.props.file_name === this.state.file_name){
+    if(this.props.file_name === this.state.file_name &&
+       this.props.file_url === this.state.file_url ){
+      console.log("NOT! Update_disp")
       return
     }else{
+      console.log("Update_disp")
       this.update_display()
     }
   }
 
   // updating the image content and title
-  update_display(){
+  async update_display(){
     if(this.props.file_url.length === 0){
       return
     }
-    this.setState({
+    await this.setState({
       file: URL.createObjectURL(this.props.file),
       file_url: this.props.file_url,
       file_name: this.props.file_name

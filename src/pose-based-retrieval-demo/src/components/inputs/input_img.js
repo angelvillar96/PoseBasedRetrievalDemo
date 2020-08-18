@@ -24,17 +24,17 @@ class InputImg extends React.Component{
   }
 
   // processing the click on the Load Img button
-  on_click(){
+  async on_click(){
     this.inputReference.current.click();
   }
 
   // processing the load of a new image
   on_change(e){
+
     let new_file = e.target.files[0]
     let file_url = e.target.value
     let fname = file_url.split("\\")
     fname = fname[fname.length-1]
-
     if( new_file !== undefined && fname.length>0 ){
       this.setState({
         file: new_file,
@@ -48,10 +48,11 @@ class InputImg extends React.Component{
         file_name: ""
       })
     }
-
+    e.target.value = null
     this.props.update_state("file", new_file)
     this.props.update_state("file_url", file_url)
     this.props.update_state("file_name", fname)
+    this.props.update_state("display_name", fname)
   }
 
   // render HTML
