@@ -21,10 +21,8 @@ class ImgDisplay extends React.Component{
   refresh(){
     if(this.props.file_name === this.state.file_name &&
        this.props.file_url === this.state.file_url ){
-      console.log("NOT! Update_disp")
       return
     }else{
-      console.log("Update_disp")
       this.update_display()
     }
   }

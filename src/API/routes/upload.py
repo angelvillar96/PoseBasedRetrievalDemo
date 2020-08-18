@@ -7,7 +7,6 @@ Receiving the data from the client side and processing the image
 import os
 import base64
 import cv2
-from PIL import Image
 
 from http import HTTPStatus
 from flask import Blueprint, jsonify, request
@@ -15,7 +14,7 @@ from flasgger import swag_from
 
 from schemas.upload import UploadSchema
 # from models.upload import UploadModel
-from lib.utils import timestamp
+from lib.utils import timestamp, save_image_from_post, encode_img
 from lib.logger import log_function, print_
 from lib.person_detection import setup_detector, person_detection
 
@@ -40,12 +39,14 @@ def receive_data():
     ---
     """
 
-    global DETECTOR
-
+    # relevant variables extracted from the POST data
     print_("Route '/api/upload' was called...")
+    global DETECTOR
     data = request.form
     files = request.files
     file_name = data["file_name"]
+
+    # relevant paths
     file_path = os.path.join(os.getcwd(), "data", "imgs", file_name)
     final_path = os.path.join(os.getcwd(), "data", "final_results",
                               "others", file_name)
@@ -53,13 +54,7 @@ def receive_data():
     # saving data in directory, cause why not?
     print_("Storing query in data directory...")
     storage_element = files["file"]
-    if(storage_element.content_type == "blob"):
-        # with open(file_path, "wb") as file:
-            # file.write(base64.decodebytes(storage_element.read()))
-        img = Image.open(storage_element.stream)
-        img.save(file_path)
-    else:
-        storage_element.save(file_path)
+    save_image_from_post(data=storage_element, path=file_path)
 
     # person detection
     # if(DETECTOR is None):
@@ -69,7 +64,7 @@ def receive_data():
     # TODO: pose estimation
     # TODO: retrieval
 
-    # dummy processing
+    # dummy processing. To be removed once detector and pose estimator are integrated
     global X
     X = X + 100
     print_("Dummy processing...")
@@ -79,9 +74,7 @@ def receive_data():
 
     # testing sending the data back to the user
     print_("Encoding result and returning response...")
-    with open(final_path, "rb") as file:
-        encoded_img = str(base64.b64encode(file.read()))
-        encoded_img = encoded_img[2:-1]
+    encoded_img = encode_img(path=final_path)
 
     json_data = {
         "data_name": os.path.basename(file_path),
