@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
 import InputImg from "./input_img.js"
+import TakePicture from "./take_picture.js"
 import ImgDisplay from "../displays/img_display.js"
 
 import {decodeBase64} from '../../lib/utils.js'
@@ -117,9 +118,16 @@ class InputArea extends React.Component{
               </Col>
               <Col sm={1} md={2}></Col>
               <Col sm={4} md={4}>
-                <Button className="myButton" variant="primary" onClick={this.startProcessing}>Process Image</Button>
+                <TakePicture className="myButton" update_state={this.update_state}/>
               </Col>
               <Col sm={1} md={1}></Col>
+            </Row>
+            <Row className="buttons_area">
+              <Col sm={3} md={4}></Col>
+              <Col sm={6} md={4}>
+                <Button className="myButton" variant="primary" onClick={this.startProcessing}>Process Image</Button>
+              </Col>
+              <Col sm={3} md={4}></Col>
             </Row>
           </Col>
           <Col md={2}>
