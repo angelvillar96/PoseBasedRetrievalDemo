@@ -17,7 +17,7 @@ from lib.logger import log_function, print_
 from lib.visualizations import visualize_bbox, visualize_img
 from lib.transforms import TransformDetection
 
-
+DETECTOR = None
 DETS_EXTRACTOR = None
 
 @log_function
@@ -48,7 +48,7 @@ def setup_detector():
 
 
 @log_function
-def person_detection(img_path, model):
+def person_detection(img_path):
     """
     Computing a forward pass throught the model to detect the persons in the image
 
@@ -56,8 +56,6 @@ def person_detection(img_path, model):
     -----
     img_path: string
         path to the image to extract the detections from
-    model: NN Module
-        Person detector model already Initialized
 
     Returns:
     --------
@@ -65,7 +63,15 @@ def person_detection(img_path, model):
         path where the image with the detected instances and bounding boxes is stored
     det_paths: list
         list with the path where the person detection images are stored
+    data: dictionary
+        dict containing the results from the detector, including the croped detections
+        and the global position of the detection in a (center, scale) format.
+        Remember detections have fixed size of (256, 192)
     """
+
+    global DETECTOR
+    if(DETECTOR is None):
+        DETECTOR = setup_detector()
 
     # loading image
     img = cv2.imread(img_path, cv2.IMREAD_COLOR)
@@ -74,7 +80,7 @@ def person_detection(img_path, model):
 
     # forward pass through person detector
     print_("Computing forward pass through person detector...")
-    outputs = model(img / 255)
+    outputs = DETECTOR(img / 255)
     boxes, labels, scores = bbox_filtering(outputs, filter_=1, thr=0.7)
 
     # saving image with bounding boxes as intermediate results and for displaying
@@ -89,6 +95,11 @@ def person_detection(img_path, model):
     # extracting the detected person instances and saving them as independent images
     print_("Extracting person detections from image...")
     detections, centers, scales = DETS_EXTRACTOR(img=img, list_coords=boxes[0])
+    data = {
+        "detections": detections,
+        "centers": centers,
+        "scales": scales
+    }
     n_dets = detections.shape[0]
     det_paths = []
     for i, det in enumerate(detections):
@@ -97,7 +108,7 @@ def person_detection(img_path, model):
         det_paths.append(det_path)
         visualize_img(img=det.transpose(1,2,0), savefig=True, savepath=det_path)
 
-    return savepath, det_paths
+    return savepath, det_paths, data
 
 
 @log_function

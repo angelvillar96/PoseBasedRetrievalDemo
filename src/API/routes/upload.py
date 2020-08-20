@@ -17,9 +17,8 @@ from schemas.upload import UploadSchema
 from lib.utils import timestamp, save_image_from_post, encode_img
 from lib.logger import log_function, print_
 from lib.person_detection import setup_detector, person_detection
+from lib.pose_estimation import setup_pose_estimator, pose_estimation
 
-DETECTOR = None
-X = 200
 
 upload_api = Blueprint('api/upload', __name__)
 @upload_api.route('/', methods=['POST'])
@@ -41,7 +40,6 @@ def receive_data():
 
     # relevant variables extracted from the POST data
     print_("Route '/api/upload' was called...")
-    global DETECTOR
     data = request.form
     files = request.files
     file_name = data["file_name"]
@@ -57,12 +55,14 @@ def receive_data():
     save_image_from_post(data=storage_element, path=file_path)
 
     # person detection
-    if(DETECTOR is None):
-        DETECTOR = setup_detector()
-    det_img_path, det_instances_path = person_detection(img_path=file_path,
-                                                        model=DETECTOR)
+    det_img_path, det_instances_path, det_data = person_detection(img_path=file_path)
 
-    # dummy processing. To be removed once detector and pose estimator are integrated
+    # pose estimation
+    pose_estimation(detections=det_data["detections"],
+                    centers=det_data["centers"],
+                    scales=det_data["scales"])
+
+    # saving final results
     img = cv2.imread(det_img_path, cv2.IMREAD_COLOR)
     cv2.imwrite(final_path, img)
 

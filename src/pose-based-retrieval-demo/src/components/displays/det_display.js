@@ -16,7 +16,7 @@ class DetDisplay extends React.Component{
 
   render(){
     var title = "Detection " + this.state.det_idx
-    var img = URL.createObjectURL(this.state.file)
+    var img = URL.createObjectURL(this.props.file)
     return(
       <div className="img_display_area">
         <div>
