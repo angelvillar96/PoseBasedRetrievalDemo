@@ -59,7 +59,8 @@ def receive_data():
     # person detection
     if(DETECTOR is None):
         DETECTOR = setup_detector()
-    det_img_path = person_detection(img_path=file_path, model=DETECTOR)
+    det_img_path, det_instances_path = person_detection(img_path=file_path,
+                                                        model=DETECTOR)
 
     # TODO: pose estimation
     # TODO: retrieval

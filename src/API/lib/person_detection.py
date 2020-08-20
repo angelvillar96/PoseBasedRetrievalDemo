@@ -14,8 +14,11 @@ from torchvision.models.detection import fasterrcnn_resnet50_fpn
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
 from lib.logger import log_function, print_
-from lib.visualizations import visualize_bbox
+from lib.visualizations import visualize_bbox, visualize_img
+from lib.transforms import TransformDetection
 
+
+DETS_EXTRACTOR = None
 
 @log_function
 def setup_detector():
@@ -37,6 +40,10 @@ def setup_detector():
     model.load_state_dict(checkpoint['model_state_dict'])
     model = model.eval()
 
+    # intiializing object for extracting detections
+    global DETS_EXTRACTOR
+    DETS_EXTRACTOR = TransformDetection(det_width=192, det_height=256)
+
     return model
 
 
@@ -56,7 +63,7 @@ def person_detection(img_path, model):
     --------
     savepath: string
         path where the image with the detected instances and bounding boxes is stored
-    det_path: list
+    det_paths: list
         list with the path where the person detection images are stored
     """
 
@@ -65,21 +72,32 @@ def person_detection(img_path, model):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     img = torch.Tensor(img.transpose(2,0,1)[np.newaxis,:])
 
-    # forward pass
-    print_("Computing forward pass through person detector")
+    # forward pass through person detector
+    print_("Computing forward pass through person detector...")
     outputs = model(img / 255)
     boxes, labels, scores = bbox_filtering(outputs, filter_=1, thr=0.7)
 
     # saving image with bounding boxes as intermediate results and for displaying
     # on the client side
-    print_("Obtaining intermediate detector visualization")
-    img_vis = img[0,:].cpu().numpy().transpose(1,2,0) / 255
+    print_("Obtaining intermediate detector visualization...")
+    img = img[0,:].cpu().numpy().transpose(1,2,0) / 255
     img_name = os.path.basename(img_path)
     savepath = os.path.join(os.getcwd(), "data", "intermediate_results", img_name)
-    visualize_bbox(img=img_vis, boxes=boxes[0], labels=labels[0],
+    visualize_bbox(img=img, boxes=boxes[0], labels=labels[0],
                    scores=scores[0], savefig=True, savepath=savepath)
 
-    return savepath
+    # extracting the detected person instances and saving them as independent images
+    print_("Extracting person detections from image...")
+    detections, centers, scales = DETS_EXTRACTOR(img=img, list_coords=boxes[0])
+    n_dets = detections.shape[0]
+    det_paths = []
+    for i, det in enumerate(detections):
+        det_name = img_name.split(".")[0] + f"_det_{i}." + img_name.split(".")[1]
+        det_path = os.path.join(os.getcwd(), "data", "final_results", "detection", det_name)
+        det_paths.append(det_path)
+        visualize_img(img=det.transpose(1,2,0), savefig=True, savepath=det_path)
+
+    return savepath, det_paths
 
 
 @log_function

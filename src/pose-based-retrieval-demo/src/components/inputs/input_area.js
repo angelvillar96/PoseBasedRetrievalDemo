@@ -122,7 +122,7 @@ class InputArea extends React.Component{
               </Col>
               <Col sm={1} md={1}></Col>
             </Row>
-            <Row className="buttons_area">
+            <Row className="buttons_area process_button_row">
               <Col sm={3} md={4}></Col>
               <Col sm={6} md={4}>
                 <Button className="myButton" variant="primary" onClick={this.startProcessing}>Process Image</Button>

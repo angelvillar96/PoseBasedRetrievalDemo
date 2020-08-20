@@ -18,6 +18,10 @@
   margin: 0 auto !important;
 }
 
+.process_button_row{
+  padding-top: 0%;
+}
+
 .myButton{
   margin: auto;
 }

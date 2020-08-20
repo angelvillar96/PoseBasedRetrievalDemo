@@ -8,10 +8,44 @@ import os
 
 import numpy as np
 from matplotlib import pyplot as plt
+import torch
 
 from lib.logger import log_function, print_
+from lib.transforms import unnormalize
 
 
+@log_function
+def visualize_img(img, **kwargs):
+    """
+    Visualizing an image accouting for the BGR format
+    """
+
+    fig, ax = plt.subplots(1,1)
+    fig.set_size_inches(8, 8)
+
+    if("bgr" in kwargs and kwargs["bgr"] == True):
+        img = np.array([img[2,:,:], img[1,:,:], img[0,:,:]])
+    if("preprocess" in kwargs):
+        img = unnormalize(torch.Tensor(img))
+        img = img.numpy().transpose(1,2,0)
+
+    ax.imshow(img)
+
+    if("title" in kwargs):
+        ax.set_title(kwargs["title"])
+
+    if("savefig" in kwargs and kwargs["savefig"]==True):
+        if("savepath" not in kwargs):
+            savepath = os.path.join(os.getcwd(), "data", "final_results", "cur_img.png")
+        else:
+            savepath = kwargs["savepath"]
+        plt.axis("off")
+        plt.savefig(savepath, bbox_inches="tight", pad_inches=0)
+
+    return
+
+
+@log_function
 def visualize_bbox(img, boxes, labels=None, scores=None, ax=None, **kwargs):
     """
     Visualizing the bounding boxes and scores predicted by the faster rcnn model
@@ -37,7 +71,7 @@ def visualize_bbox(img, boxes, labels=None, scores=None, ax=None, **kwargs):
     if("bgr" in kwargs and kwargs["bgr"] == True):
         img = np.array([img[2,:,:], img[1,:,:], img[0,:,:]])
     if("preprocess" in kwargs and kwargs["preprocess"] == True):
-        img = custom_transforms.unnormalize(torch.Tensor(img))
+        img = unnormalize(torch.Tensor(img))
         img = img.numpy().transpose(1,2,0)
     ax.imshow(img)
 
@@ -70,6 +104,6 @@ def visualize_bbox(img, boxes, labels=None, scores=None, ax=None, **kwargs):
         else:
             savepath = kwargs["savepath"]
         plt.axis("off")
-        plt.savefig(savepath, bbox_inches="tight")
+        plt.savefig(savepath, bbox_inches="tight", pad_inches=0)
 
     return
