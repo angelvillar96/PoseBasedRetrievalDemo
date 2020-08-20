@@ -65,7 +65,11 @@ def visualize_bbox(img, boxes, labels=None, scores=None, ax=None, **kwargs):
                     bbox={'facecolor': 'white', 'alpha': 0.5, 'pad': 0})
 
     if("savefig" in kwargs and kwargs["savefig"]==True):
-        savepath = os.path.join(os.getcwd(), "data", "intermediate_results", "bbox_img.png")
-        plt.savefig(savepath)
+        if("savepath" not in kwargs):
+            savepath = os.path.join(os.getcwd(), "data", "intermediate_results", "bbox_img.png")
+        else:
+            savepath = kwargs["savepath"]
+        plt.axis("off")
+        plt.savefig(savepath, bbox_inches="tight")
 
     return

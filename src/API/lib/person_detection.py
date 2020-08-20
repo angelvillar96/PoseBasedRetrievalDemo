@@ -25,16 +25,16 @@ def setup_detector():
 
     # intializing model skeleton
     print_("Initializing Person Detector")
-    model = fasterrcnn_resnet50_fpn(pretrained=True)
-    # in_features = model.roi_heads.box_predictor.cls_score.in_features
-    # model.roi_heads.box_predictor = FastRCNNPredictor(in_features, 2)
-    # model = DataParallel(model)
-    #
-    # # loading pretrained weights
-    # print_("Loading detector pretrained parameters ")
-    # pretrained_path = os.path.join(os.getcwd(), "resources", "coco_person_detector.pth")
-    # checkpoint = torch.load(pretrained_path, map_location='cpu')
-    # model.load_state_dict(checkpoint['model_state_dict'])
+    model = fasterrcnn_resnet50_fpn(pretrained=False)
+    in_features = model.roi_heads.box_predictor.cls_score.in_features
+    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, 2)
+    model = DataParallel(model)
+
+    # loading pretrained weights
+    print_("Loading detector pretrained parameters ")
+    pretrained_path = os.path.join(os.getcwd(), "resources", "coco_person_detector.pth")
+    checkpoint = torch.load(pretrained_path, map_location='cpu')
+    model.load_state_dict(checkpoint['model_state_dict'])
     model = model.eval()
 
     return model
@@ -44,27 +44,42 @@ def setup_detector():
 def person_detection(img_path, model):
     """
     Computing a forward pass throught the model to detect the persons in the image
+
+    Args:
+    -----
+    img_path: string
+        path to the image to extract the detections from
+    model: NN Module
+        Person detector model already Initialized
+
+    Returns:
+    --------
+    savepath: string
+        path where the image with the detected instances and bounding boxes is stored
+    det_path: list
+        list with the path where the person detection images are stored
     """
 
     # loading image
     img = cv2.imread(img_path, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     img = torch.Tensor(img.transpose(2,0,1)[np.newaxis,:])
-    print_(img.shape)
 
     # forward pass
     print_("Computing forward pass through person detector")
     outputs = model(img / 255)
     boxes, labels, scores = bbox_filtering(outputs, filter_=1, thr=0.7)
 
-    # saving intermediate result
+    # saving image with bounding boxes as intermediate results and for displaying
+    # on the client side
     print_("Obtaining intermediate detector visualization")
-    title = "Person Detection Bboxes"
     img_vis = img[0,:].cpu().numpy().transpose(1,2,0) / 255
+    img_name = os.path.basename(img_path)
+    savepath = os.path.join(os.getcwd(), "data", "intermediate_results", img_name)
     visualize_bbox(img=img_vis, boxes=boxes[0], labels=labels[0],
-                   scores=scores[0], title=title, savefig=True)
+                   scores=scores[0], savefig=True, savepath=savepath)
 
-    return
+    return savepath
 
 
 @log_function

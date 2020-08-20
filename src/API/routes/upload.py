@@ -59,23 +59,18 @@ def receive_data():
     # person detection
     if(DETECTOR is None):
         DETECTOR = setup_detector()
-    person_detection(img_path=file_path, model=DETECTOR)
+    det_img_path = person_detection(img_path=file_path, model=DETECTOR)
 
     # TODO: pose estimation
     # TODO: retrieval
 
     # dummy processing. To be removed once detector and pose estimator are integrated
-    global X
-    X = X + 0
-    print_("Dummy processing...")
-    img = cv2.imread(file_path, cv2.IMREAD_COLOR)
-    cv2.putText(img, "Writing something for testing", (X,X), 0, 3, (0,0,255), 3)
+    img = cv2.imread(det_img_path, cv2.IMREAD_COLOR)
     cv2.imwrite(final_path, img)
 
     # testing sending the data back to the user
     print_("Encoding result and returning response...")
     encoded_img = encode_img(path=final_path)
-
     json_data = {
         "data_name": os.path.basename(file_path),
         "data_url": file_path,

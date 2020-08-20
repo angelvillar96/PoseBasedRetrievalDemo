@@ -41,7 +41,7 @@ class TakePicture extends React.Component{
     await this.setState({
         "file": img_file,
         "file_url": img_url,
-        "file_name": "camera_img" + get_timestamp() + ".png"
+        "file_name": "camera_img_" + get_timestamp() + ".png"
     });
 
     this.props.update_state("file", this.state.file)
