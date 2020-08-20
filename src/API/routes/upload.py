@@ -62,20 +62,19 @@ def receive_data():
     det_img_path, det_instances_path = person_detection(img_path=file_path,
                                                         model=DETECTOR)
 
-    # TODO: pose estimation
-    # TODO: retrieval
-
     # dummy processing. To be removed once detector and pose estimator are integrated
     img = cv2.imread(det_img_path, cv2.IMREAD_COLOR)
     cv2.imwrite(final_path, img)
 
     # testing sending the data back to the user
-    print_("Encoding result and returning response...")
+    print_("Encoding results and returning response...")
     encoded_img = encode_img(path=final_path)
+    encoded_dets = [encode_img(path=det_path) for det_path in det_instances_path]
     json_data = {
-        "data_name": os.path.basename(file_path),
-        "data_url": file_path,
-        "data_binary": encoded_img
+        "img_name": os.path.basename(file_path),
+        "img_url": file_path,
+        "img_binary": encoded_img,
+        "detections": encoded_dets
     }
     response = jsonify(json_data)
     response.headers.add('Access-Control-Allow-Origin', '*')

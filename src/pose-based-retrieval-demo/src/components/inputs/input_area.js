@@ -6,6 +6,7 @@ import axios from 'axios';
 import InputImg from "./input_img.js"
 import TakePicture from "./take_picture.js"
 import ImgDisplay from "../displays/img_display.js"
+import DetDisplay from "../displays/det_display.js"
 
 import {decodeBase64} from '../../lib/utils.js'
 import "./styles/input_styles.css"
@@ -18,6 +19,7 @@ class InputArea extends React.Component{
         file_blob: undefined,
         file_url: "",
         file_name: "",
+        dets: "",
         display_name: ""
     }
     this.update_state = this.update_state.bind(this)
@@ -48,7 +50,7 @@ class InputArea extends React.Component{
     const formData = new FormData()
     const skip = ["file_blob"]
     formData.append("timestamp", new Date().toLocaleString())
-    for (let name in this.state) {
+    for (var name in this.state) {
       if(skip.includes(name)){
         continue
       }
@@ -56,8 +58,9 @@ class InputArea extends React.Component{
     }
 
     // establishing connection, sendinng and awaiting response
-    let url_object = undefined
-    let results = undefined
+    var url_object = undefined
+    var detections = undefined
+    var results = undefined
     axios({
       method: 'post',
       url: 'http://localhost:5000/api/upload/',
@@ -67,22 +70,31 @@ class InputArea extends React.Component{
     })
     .then(function (response) {
         //handle success
+        console.log("Success")
         results = response
-        let img_binary = results.data.data_binary
+        var img_binary = results.data.img_binary
         url_object = decodeBase64(img_binary)
+        detections = []
+        for(var i=0; i<results.data.detections.length; i++){
+          var cur_det = decodeBase64(results.data.detections[i])
+          detections.push(cur_det)
+        }
     })
     .catch(function (response) {
         //handle error
+        console.log("Error!")
         results = 0
     })
     .finally(() => {
       // logic executed after having received the response
+      console.log("Updating state")
       if(results !== 0){
-        let time = new Date().getTime()
+        var time = new Date().getTime()
         this.setState({
           file: url_object,
           file_blob: url_object,
           file_url: results.data.data_url + "?" + time,
+          dets: detections,
           display_name: "Detections"
         })
       }
@@ -90,7 +102,7 @@ class InputArea extends React.Component{
 
   }
 
-  // selects which image is goint ot be displayed on canvas
+  // selects which image is going ot be displayed on canvas: original or requested
   get_disp(){
     if(this.state.file === this.state.file_blob){
       return this.state.file_blob
@@ -100,7 +112,18 @@ class InputArea extends React.Component{
   }
 
   render(){
+
     var disp = this.get_disp()
+    var det_displays = []
+    for(var i=0; i<this.state.dets.length; i++){
+      var cur_det_display = {
+        id:i,
+        value: <DetDisplay file={this.state.dets[i]} det_idx={i+1}/>
+      }
+      det_displays.push(cur_det_display)
+    }
+    console.log("n det_displays: " + det_displays.length)
+
     return(
       <Container className="input_area">
         <Row fluid="true">
@@ -109,7 +132,7 @@ class InputArea extends React.Component{
           <Col sm={12} md={8}>
             <Row fluid="true">
               <ImgDisplay file={disp} file_url={this.state.file_url}
-                          file_name={this.state.display_name}/>
+                          file_name={this.state.display_name} disp_type="img_display"/>
             </Row>
             <Row className="buttons_area">
               <Col sm={1} md={1}></Col>
@@ -132,6 +155,11 @@ class InputArea extends React.Component{
           </Col>
           <Col md={2}>
           </Col>
+        </Row>
+        <Row className="detsArea">
+            {det_displays.map(cur_det_display => (
+              <Col sm={4} md={3} key={cur_det_display.id}>{cur_det_display.value}</Col>
+            ))}
         </Row>
       </Container>
     )
