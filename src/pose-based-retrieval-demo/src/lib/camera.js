@@ -7,12 +7,13 @@
 // object processing all the camera and emerging window actions
 const camera = function(){
 
+  var callback = undefined
   var imgURI = undefined
   var externalWindow = undefined
+  var video_stream = undefined
   var video = undefined
   var canvas = undefined
   var context = undefined
-  var send_uri = false
 
   // initializing a pop-up window where video is streamed to take a snapshot
   const initialize_window = function(){
@@ -52,8 +53,11 @@ const camera = function(){
     externalWindow.document.getElementById("but_div").appendChild(btn);
     externalWindow.document.body.appendChild(canvas);
     externalWindow.addEventListener('unload', function(eventObject) {
-      console.log("unload")
-      send_uri = true
+      var tracks = video_stream.getTracks();
+      tracks.forEach(function(track) {
+        track.stop();
+      });
+      callback(imgURI)
     });
     externalWindow.focus();
 
@@ -63,13 +67,13 @@ const camera = function(){
   // streaming video to a canvas
   const stream_video = function (video) {
     navigator.mediaDevices.getUserMedia({video: true}).then(function (stream) {
-      video.srcObject = stream;
+      video_stream = stream;
+      video.srcObject = video_stream;
       video.play();
     });
   }
 
   const take_snapshot = function(){
-    console.log("Click")
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     imgURI = canvas.toDataURL('image/png');
     externalWindow.close()
@@ -78,7 +82,8 @@ const camera = function(){
   // exporting methods to be called from the take_picture component
   return{
 
-    start_camera: function(){
+    start_camera: function(set_img_uri){
+      callback = set_img_uri
       let externalWindow = initialize_window()
       externalWindow.focus();
       video = externalWindow.document.getElementById("video")
@@ -87,14 +92,9 @@ const camera = function(){
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         stream_video(video)
       }
-    },
-    get_img_uri: function(){
-      
-      return imgURI
     }
 
   }
-
 
 
 }();

@@ -57,16 +57,16 @@ def receive_data():
     save_image_from_post(data=storage_element, path=file_path)
 
     # person detection
-    # if(DETECTOR is None):
-        # DETECTOR = setup_detector()
-    # person_detection(img_path=file_path, model=DETECTOR)
+    if(DETECTOR is None):
+        DETECTOR = setup_detector()
+    person_detection(img_path=file_path, model=DETECTOR)
 
     # TODO: pose estimation
     # TODO: retrieval
 
     # dummy processing. To be removed once detector and pose estimator are integrated
     global X
-    X = X + 100
+    X = X + 0
     print_("Dummy processing...")
     img = cv2.imread(file_path, cv2.IMREAD_COLOR)
     cv2.putText(img, "Writing something for testing", (X,X), 0, 3, (0,0,255), 3)

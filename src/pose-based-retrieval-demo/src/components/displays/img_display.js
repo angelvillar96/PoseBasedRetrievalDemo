@@ -32,6 +32,7 @@ class ImgDisplay extends React.Component{
     if(this.props.file_url.length === 0){
       return
     }
+
     await this.setState({
       file: URL.createObjectURL(this.props.file),
       file_url: this.props.file_url,

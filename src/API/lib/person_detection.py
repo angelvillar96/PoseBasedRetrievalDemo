@@ -25,17 +25,17 @@ def setup_detector():
 
     # intializing model skeleton
     print_("Initializing Person Detector")
-    model = fasterrcnn_resnet50_fpn(pretrained=False)
-    in_features = model.roi_heads.box_predictor.cls_score.in_features
-    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, 2)
-    model = DataParallel(model)
-
-    # loading pretrained weights
-    print_("Loading detector pretrained parameters ")
-    pretrained_path = os.path.join(os.getcwd(), "resources", "coco_person_detector.pth")
-    checkpoint = torch.load(pretrained_path, map_location='cpu')
-    model.load_state_dict(checkpoint['model_state_dict'])
-    model.eval()
+    model = fasterrcnn_resnet50_fpn(pretrained=True)
+    # in_features = model.roi_heads.box_predictor.cls_score.in_features
+    # model.roi_heads.box_predictor = FastRCNNPredictor(in_features, 2)
+    # model = DataParallel(model)
+    #
+    # # loading pretrained weights
+    # print_("Loading detector pretrained parameters ")
+    # pretrained_path = os.path.join(os.getcwd(), "resources", "coco_person_detector.pth")
+    # checkpoint = torch.load(pretrained_path, map_location='cpu')
+    # model.load_state_dict(checkpoint['model_state_dict'])
+    model = model.eval()
 
     return model
 
