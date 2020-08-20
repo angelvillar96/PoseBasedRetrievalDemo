@@ -207,6 +207,19 @@ def flip_back(output_flipped, matched_parts):
 
 
 
+def transform_preds(coords, center, scale, output_size):
+    """
+    Transforming some coordinates using affine transformations
+    """
+
+    target_coords = np.zeros(coords.shape)
+    trans = get_affine_transform(center, scale, 0, output_size, inv=1)
+    for p in range(coords.shape[0]):
+        target_coords[p, 0:2] = affine_transform(coords[p, 0:2], trans)
+        # target_coords[p, 0], target_coords[p, 1] = target_coords[p, 1], target_coords[p, 0]
+    return target_coords
+
+
 def unnormalize(img):
     """
     Undoing the default COCO normalization. Output image will be in range [0,1]

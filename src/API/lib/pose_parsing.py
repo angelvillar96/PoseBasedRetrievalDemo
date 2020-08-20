@@ -7,9 +7,11 @@ Methods for processing predicted keypoint heatmaps and parsing keypoints into po
 import numpy as np
 import torch
 
+from lib.logger import log_function, print_
 from lib.transforms import transform_preds
 
 
+@log_function
 def get_max_preds_hrnet(scaled_heats, thr=0.1):
     """
     Obtaining joint positions and confidence values from heatmaps estimated by the HRNet model
@@ -52,6 +54,7 @@ def get_max_preds_hrnet(scaled_heats, thr=0.1):
     return preds, maxvals
 
 
+@log_function
 def get_final_preds_hrnet(heatmaps, center, scale):
     """
     Obtaining the predicted keypoint coordinates and corresponding score from each
@@ -89,6 +92,7 @@ def get_final_preds_hrnet(heatmaps, center, scale):
     return preds, maxvals, coords
 
 
+@log_function
 def create_pose_entries(keypoints, max_vals=None, thr=0.1):
     """
     Creating pose objects from the detected joint-keypoints for the HRNet

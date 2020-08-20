@@ -58,9 +58,9 @@ def receive_data():
     det_img_path, det_instances_path, det_data = person_detection(img_path=file_path)
 
     # pose estimation
-    pose_estimation(detections=det_data["detections"],
-                    centers=det_data["centers"],
-                    scales=det_data["scales"])
+    # pose_estimation(detections=det_data["detections"],
+                    # centers=det_data["centers"],
+                    # scales=det_data["scales"])
 
     # saving final results
     img = cv2.imread(det_img_path, cv2.IMREAD_COLOR)

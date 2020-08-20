@@ -8,10 +8,42 @@ import os
 
 import numpy as np
 from matplotlib import pyplot as plt
+import matplotlib.lines as mlines
+import matplotlib.patches as mpatches
 import torch
 
 from lib.logger import log_function, print_
 from lib.transforms import unnormalize
+
+# colors for drawing the human poses. Similar parts have similar colors, e.g.,
+#   left-ankle2left-knee and left-hip2left-knee have redish hues
+#   face lines have yellowish colors
+COLORS = {
+    "0": "red",             # left ankle -  left knee
+    "1": "tomato",          # left knee  -  left hip
+    "2": "lime",            # left hip   - left shoulder
+    "3": "royalblue",       # right hip  - right knee
+    "4": "navy",            # right knee - right ankle
+    "5": "green",           # right hip  - right shoulder
+    "6": "bisque",
+    "7": "palegoldenrod",
+    "8": "khaki",
+    "9": "moccasin",
+    "10": "wheat",
+    "11": "fuchsia",        # left elbow     - left wrist
+    "12": "deeppink",       # left shouldsr  - left elbow
+    "13": "lawngreen",      # left shoulder  - right shoulder
+    "14": "aqua",           # right shoulder - right elbow
+    "15": "turquoise",      # right elbow    - right wrist
+    "16": "darkorange",     # left shoulder  - left ear
+    "17": "orange",         # right shoudler - right ear
+    "18": "saddlebrown"
+}
+
+# connections between keypoints for parsing the pose skeleton
+SKELETON = [[15, 13], [13, 11], [11, 5], [12, 14], [14, 16], [12, 6], [3, 1], [1, 2],
+            [1, 0], [0, 2], [2, 4], [9, 7], [7, 5], [5, 6], [6, 8], [8, 10], [3, 5],
+            [4, 6]]
 
 
 @log_function
@@ -107,3 +139,57 @@ def visualize_bbox(img, boxes, labels=None, scores=None, ax=None, **kwargs):
         plt.savefig(savepath, bbox_inches="tight", pad_inches=0)
 
     return
+
+
+@log_function
+def draw_pose(img, poses, all_keypoints, **kwargs):
+    """
+    Overlaying the predicted poses on top of the images
+    """
+
+    fig, ax = plt.subplots(1,1)
+    fig.set_size_inches(8, 8)
+
+    if("bgr" in kwargs and kwargs["bgr"] == True):
+        img = np.array([img[2,:,:], img[1,:,:], img[0,:,:]])
+    if("preprocess" in kwargs and kwargs["preprocess"] == True):
+        img = unnormalize(torch.Tensor(img))
+        img = img.numpy().transpose(1,2,0)
+    ax.imshow(img)
+
+    for pose in poses:
+        for idx, limb in enumerate(SKELETON):
+            idx_a, idx_b = int(pose[limb[0]]), int(pose[limb[1]])
+            if(idx_a == -1 or idx_b == -1):
+                continue
+            a, b = all_keypoints[idx_a], all_keypoints[idx_b]
+            if(a[-1] == 0 or b[-1] == 0):
+                continue
+            color = COLORS[str(idx)]
+            line = mlines.Line2D(
+                    np.array([a[1], b[1]]), np.array([a[0], b[0]]),
+                    ls='-', lw=5, alpha=1, color=color)
+            circle1 = mpatches.Circle(np.array([a[1], a[0]]), radius=5,
+                                     ec='black', fc=color,
+                                     alpha=1, linewidth=5)
+            circle2 = mpatches.Circle(np.array([b[1], b[0]]), radius=5,
+                                     ec='black', fc=color,
+                                     alpha=1, linewidth=5)
+            line.set_zorder(1)
+            circle1.set_zorder(2)
+            circle2.set_zorder(2)
+            ax.add_patch(circle1)
+            ax.add_patch(circle2)
+            ax.add_line(line)
+
+    if("savefig" in kwargs and kwargs["savefig"]==True):
+        if("savepath" not in kwargs):
+            savepath = os.path.join(os.getcwd(), "data", "final_results", "cur_skeleton.png")
+        else:
+            savepath = kwargs["savepath"]
+        plt.axis("off")
+        plt.savefig(savepath, bbox_inches="tight", pad_inches=0)
+
+    return
+
+#
