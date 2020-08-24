@@ -26,7 +26,7 @@ class InputArea extends React.Component{
         poses: "",
         // vectors used for retrieval
         pose_vectors: "",
-        keypoints: "",
+        keypoints: ""
     }
     // method used for updating the results. Comes as a prop from the Root App component
     this.update_results = this.props.update_results.bind(this)
@@ -116,6 +116,7 @@ class InputArea extends React.Component{
       }
     });
 
+
   }
 
   // selects which image is going ot be displayed on canvas: original or requested
@@ -129,6 +130,7 @@ class InputArea extends React.Component{
 
   render(){
 
+    // creating a display box for each detected instance
     var disp = this.get_disp()
     var det_displays = []
     for(var i=0; i<this.state.poses.length; i++){
@@ -165,7 +167,10 @@ class InputArea extends React.Component{
             <Row className="buttons_area process_button_row">
               <Col sm={3} md={4}></Col>
               <Col sm={6} md={4}>
-                <Button className="myButton" variant="primary" onClick={this.startProcessing}>Process Image</Button>
+                <Button className="myButton" variant="primary"
+                        onClick={this.startProcessing}>
+                  Process Image
+                </Button>
               </Col>
               <Col sm={3} md={4}></Col>
             </Row>

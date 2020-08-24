@@ -14,6 +14,7 @@ from flasgger import Swagger
 from routes.home import home_api
 from routes.upload import upload_api
 from routes.retrieve import retrieve_api
+from routes.progress import progress_api
 from lib.logger import Logger, log_function, print_
 
 
@@ -33,6 +34,7 @@ def create_app():
     app.register_blueprint(home_api, url_prefix='/api')
     app.register_blueprint(upload_api, url_prefix='/api/upload')
     app.register_blueprint(retrieve_api, url_prefix='/api/retrieve')
+    app.register_blueprint(progress_api, url_prefix='/api/get_progress')
     app.run(host='0.0.0.0', port=port)
     return
 

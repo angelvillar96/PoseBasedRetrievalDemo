@@ -7,7 +7,7 @@
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 10%;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   font-size: 1em;
   flex-direction: column;
   align-items: center;
@@ -29,6 +29,11 @@
 .myButton{
   margin: auto;
 }
+
+.progress_bar_style{
+  width: 80%;
+}
+
 
 /*#########################
 ## Styles for the Drop Area
