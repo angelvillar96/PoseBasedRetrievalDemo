@@ -13,7 +13,8 @@ class App extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      results: []
+      images: [],
+      metrics: []
     }
     this.update_results = this.update_results.bind(this)
   }
@@ -21,7 +22,8 @@ class App extends React.Component{
   // receiving the new results
   async update_results(results){
     await this.setState({
-      results: results
+      images: results.images,
+      metrics: results.metrics
     })
     console.log("Updated results! :)")
   }
@@ -35,7 +37,7 @@ class App extends React.Component{
         <Separator title="Input"/>
         <InputArea update_results={this.update_results}/>
         <Separator title="Results"/>
-        <ResultsArea results={this.state.results}/>
+        <ResultsArea images={this.state.images} metrics={this.state.metrics}/>
         <Separator/>
         <Text text_display="by Angel Villar-Corrales" font_size="1.3em"/>
         <Separator/>

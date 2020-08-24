@@ -57,7 +57,7 @@ def receive_data():
     dist = np.arange(10).tolist()
     json_data = {
         "images": images,
-        "dist": dist
+        "metrics": dist
     }
 
     response = jsonify(json_data)

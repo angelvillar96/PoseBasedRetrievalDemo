@@ -45,7 +45,7 @@ class DetDisplay extends React.Component{
     .then(function (response) {
         //handle success
         console.log("Success")
-        results = response
+        results = response.data
     })
     .catch(function (response) {
         //handle error
