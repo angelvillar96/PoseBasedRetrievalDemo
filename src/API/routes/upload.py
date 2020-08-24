@@ -67,19 +67,22 @@ def receive_data():
     img = cv2.imread(det_img_path, cv2.IMREAD_COLOR)
     cv2.imwrite(final_path, img)
 
-    # testing sending the data back to the user
+    # sending the data back to the user. Encoding images to binary format and arrays
+    # as lists so as to form a json response
     print_("Encoding results and returning response...")
     encoded_img = encode_img(path=final_path)
     encoded_dets = [encode_img(path=det_path) for det_path in det_instances_path]
     encoded_poses = [encode_img(path=pose_path) for pose_path in pose_data["pose_paths"]]
+    indep_pose_entries = [entry.tolist() for entry in pose_data['indep_pose_entries']]
+    indep_all_keypoints = pose_data['indep_all_keypoints'].tolist()
     json_data = {
         "img_name": os.path.basename(file_path),
         "img_url": file_path,
         "img_binary": encoded_img,
         "detections": encoded_dets,
         "poses": encoded_poses,
-        "pose_vectors": pose_data['indep_pose_entries'],
-        "keypoints": pose_data['indep_all_keypoints']
+        "pose_vectors": indep_pose_entries,
+        "keypoints": indep_all_keypoints
     }
     response = jsonify(json_data)
     response.headers.add('Access-Control-Allow-Origin', '*')

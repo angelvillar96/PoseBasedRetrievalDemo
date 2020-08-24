@@ -12,7 +12,7 @@ class DetDisplay extends React.Component{
         file: this.props.file,
         det_idx: this.props.det_idx,
         pose_vector: this.props.pose_vector,
-        keypoint_vector: this.props.keypoint_vector
+        keypoints: this.props.keypoints
     }
     this.selectThisDet = this.selectThisDet.bind(this)
   }

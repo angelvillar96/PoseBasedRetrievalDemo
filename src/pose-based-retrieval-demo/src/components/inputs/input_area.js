@@ -104,7 +104,7 @@ class InputArea extends React.Component{
           poses: poses,
           dets: detections,
           pose_vectors: results.data.pose_vectors,
-          keypoint_vectors: results.data.keypoint_vectors,
+          keypoint_vectors: results.data.keypoints,
           display_name: "Detections"
         })
       }
@@ -129,7 +129,7 @@ class InputArea extends React.Component{
       var cur_det_display = {
         id:i,
         value: <DetDisplay file={this.state.poses[i]} pose_vector={this.state.pose_vectors[i]}
-                           keypoint_vector={this.state.keypoint_vectors[i]} det_idx={i+1}/>
+                           keypoints={this.state.keypoints} det_idx={i+1}/>
       }
       det_displays.push(cur_det_display)
     }

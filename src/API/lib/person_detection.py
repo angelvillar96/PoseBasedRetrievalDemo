@@ -101,6 +101,7 @@ def person_detection(img_path):
         "scales": scales
     }
     n_dets = detections.shape[0]
+    print_(f"{n_dets} person instances have been detected...")
     det_paths = []
     for i, det in enumerate(detections):
         det_name = img_name.split(".")[0] + f"_det_{i}." + img_name.split(".")[1]
