@@ -20,6 +20,7 @@ class InputArea extends React.Component{
         file_url: "",
         file_name: "",
         dets: "",
+        poses: "",
         display_name: ""
     }
     this.update_state = this.update_state.bind(this)
@@ -60,6 +61,7 @@ class InputArea extends React.Component{
     // establishing connection, sendinng and awaiting response
     var url_object = undefined
     var detections = undefined
+    var poses = undefined
     var results = undefined
     axios({
       method: 'post',
@@ -74,8 +76,13 @@ class InputArea extends React.Component{
         results = response
         var img_binary = results.data.img_binary
         url_object = decodeBase64(img_binary)
+        poses = []
+        for(var i=0; i<results.data.poses.length; i++){
+          var cur_pose = decodeBase64(results.data.poses[i])
+          poses.push(cur_pose)
+        }
         detections = []
-        for(var i=0; i<results.data.detections.length; i++){
+        for(i=0; i<results.data.detections.length; i++){
           var cur_det = decodeBase64(results.data.detections[i])
           detections.push(cur_det)
         }
@@ -94,6 +101,7 @@ class InputArea extends React.Component{
           file: url_object,
           file_blob: url_object,
           file_url: results.data.data_url + "?" + time,
+          poses: poses,
           dets: detections,
           display_name: "Detections"
         })
@@ -115,10 +123,10 @@ class InputArea extends React.Component{
 
     var disp = this.get_disp()
     var det_displays = []
-    for(var i=0; i<this.state.dets.length; i++){
+    for(var i=0; i<this.state.poses.length; i++){
       var cur_det_display = {
         id:i,
-        value: <DetDisplay file={this.state.dets[i]} det_idx={i+1}/>
+        value: <DetDisplay file={this.state.poses[i]} det_idx={i+1}/>
       }
       det_displays.push(cur_det_display)
     }

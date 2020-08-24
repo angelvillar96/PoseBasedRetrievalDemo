@@ -58,9 +58,10 @@ def receive_data():
     det_img_path, det_instances_path, det_data = person_detection(img_path=file_path)
 
     # pose estimation
-    # pose_estimation(detections=det_data["detections"],
-                    # centers=det_data["centers"],
-                    # scales=det_data["scales"])
+    pose_data = pose_estimation(detections=det_data["detections"],
+                                centers=det_data["centers"],
+                                scales=det_data["scales"],
+                                img_path=file_path)
 
     # saving final results
     img = cv2.imread(det_img_path, cv2.IMREAD_COLOR)
@@ -70,11 +71,13 @@ def receive_data():
     print_("Encoding results and returning response...")
     encoded_img = encode_img(path=final_path)
     encoded_dets = [encode_img(path=det_path) for det_path in det_instances_path]
+    encoded_poses = [encode_img(path=pose_path) for pose_path in pose_data["pose_paths"]]
     json_data = {
         "img_name": os.path.basename(file_path),
         "img_url": file_path,
         "img_binary": encoded_img,
-        "detections": encoded_dets
+        "detections": encoded_dets,
+        "poses": encoded_poses
     }
     response = jsonify(json_data)
     response.headers.add('Access-Control-Allow-Origin', '*')

@@ -16,6 +16,8 @@ import torchvision.transforms as transforms
 from lib.logger import log_function, print_
 from lib.pose_parsing import get_final_preds_hrnet, get_max_preds_hrnet, create_pose_entries
 from lib.visualizations import draw_pose
+from lib.HRNet import PoseHighResolutionNet
+
 
 KEYPOINT_ESTIMATOR = None
 NORMALIZER = None
@@ -27,7 +29,7 @@ def setup_pose_estimator():
     """
 
     print_("Initializing Pose Estimation model...")
-    model = models.PoseHighResolutionNet(is_train=False)
+    model = PoseHighResolutionNet(is_train=False)
 
     print_("Loading pretrained model parameters...")
     pretrained_path = os.path.join(os.getcwd(), "resources", "coco_hrnet_w32_256x192.pth")
@@ -45,7 +47,7 @@ def setup_pose_estimator():
 
 
 @log_function
-def pose_estimation(detections, centers, scales):
+def pose_estimation(detections, centers, scales, img_path):
     """
     Detecting the keypoints for the input images and parsing the human poses
 
@@ -57,10 +59,14 @@ def pose_estimation(detections, centers, scales):
         center coordinates of each person detection
     scales: numpy array
         scale factor for each person detection
+    img_path: string
+        path to the image to extract the detections from
 
     Returns:
     --------
-    TODO
+    pose_data: dictionary
+        dict containing the processed information about keypoints and pose objects
+        for each person instance and for the full joined image
     """
 
     # initializing the model if necessary
@@ -80,23 +86,51 @@ def pose_estimation(detections, centers, scales):
 
     # extracting keypoint coordinates and confidence values from heatmaps
     print_("Extracting keypoints from heatmaps...")
-    keypoint_coords, max_vals_coords = get_max_preds_hrnet(scaled_heats=scaled_dets.numpy())
-    keypoints, max_vals, coords = get_final_preds_hrnet(heatmaps=keypoint_dets.numpy(),
-                                                        center=centers, scale=scales)
+    keypoint_coords,\
+        max_vals_coords = get_max_preds_hrnet(scaled_heats=scaled_dets.detach().numpy())
+    keypoints, max_vals, _ = get_final_preds_hrnet(heatmaps=keypoint_dets.detach().numpy(),
+                                                  center=centers, scale=scales)
 
     # parsing poses by combining and joining keypoits
     print_("Parsing human poses...")
     indep_pose_entries, indep_all_keypoints = create_pose_entries(keypoints=keypoint_coords,
                                                                   max_vals=max_vals_coords,
                                                                   thr=0.1)
+    indep_all_keypoints = [indep_all_keypoints[:, 1], indep_all_keypoints[:, 0],\
+                           indep_all_keypoints[:, 2], indep_all_keypoints[:, 3]]
+    indep_all_keypoints = np.array(indep_all_keypoints).T
     pose_entries, all_keypoints = create_pose_entries(keypoints=keypoints,
                                                       max_vals=max_vals,
                                                       thr=0.1)
+    all_keypoints = [all_keypoints[:, 1], all_keypoints[:, 0],\
+                     all_keypoints[:, 2], all_keypoints[:, 3]]
+    all_keypoints = np.array(all_keypoints).T
 
     # creating pose visualizations and saving in the corresponding directory
-    # TODO
+    img_name = os.path.basename(img_path)
+    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    savepath = os.path.join(os.getcwd(), "data", "final_results", "pose_estimation", img_name)
+    draw_pose(img/255, pose_entries, all_keypoints, savefig=True, savepath=savepath)
+    pose_paths = []
+    for i, det in enumerate(detections):
+        det_name = img_name.split(".")[0] + f"_det_{i}." + img_name.split(".")[1]
+        savepath = os.path.join(os.getcwd(), "data", "final_results",
+                                "pose_estimation", det_name)
+        pose_paths.append(savepath)
+        draw_pose(norm_detections[i], [indep_pose_entries[i]], indep_all_keypoints,
+                  preprocess=True, savefig=True, savepath=savepath)
 
-    return
+    # returning pose data in correct format
+    pose_data = {
+        "indep_pose_entries": indep_pose_entries,
+        "indep_all_keypoints": indep_all_keypoints,
+        "pose_entries": pose_entries,
+        "all_keypoints": all_keypoints,
+        "pose_paths": pose_paths
+    }
+
+    return pose_data
 
 
 #
