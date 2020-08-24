@@ -21,6 +21,8 @@ class InputArea extends React.Component{
         file_name: "",
         dets: "",
         poses: "",
+        pose_vectors: "",
+        keypoint_vectors: "",
         display_name: ""
     }
     this.update_state = this.update_state.bind(this)
@@ -77,12 +79,10 @@ class InputArea extends React.Component{
         var img_binary = results.data.img_binary
         url_object = decodeBase64(img_binary)
         poses = []
+        detections = []
         for(var i=0; i<results.data.poses.length; i++){
           var cur_pose = decodeBase64(results.data.poses[i])
           poses.push(cur_pose)
-        }
-        detections = []
-        for(i=0; i<results.data.detections.length; i++){
           var cur_det = decodeBase64(results.data.detections[i])
           detections.push(cur_det)
         }
@@ -103,6 +103,8 @@ class InputArea extends React.Component{
           file_url: results.data.data_url + "?" + time,
           poses: poses,
           dets: detections,
+          pose_vectors: results.data.pose_vectors,
+          keypoint_vectors: results.data.keypoint_vectors,
           display_name: "Detections"
         })
       }
@@ -126,7 +128,8 @@ class InputArea extends React.Component{
     for(var i=0; i<this.state.poses.length; i++){
       var cur_det_display = {
         id:i,
-        value: <DetDisplay file={this.state.poses[i]} det_idx={i+1}/>
+        value: <DetDisplay file={this.state.poses[i]} pose_vector={this.state.pose_vectors[i]}
+                           keypoint_vector={this.state.keypoint_vectors[i]} det_idx={i+1}/>
       }
       det_displays.push(cur_det_display)
     }

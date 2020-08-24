@@ -77,7 +77,9 @@ def receive_data():
         "img_url": file_path,
         "img_binary": encoded_img,
         "detections": encoded_dets,
-        "poses": encoded_poses
+        "poses": encoded_poses,
+        "pose_vectors": pose_data['indep_pose_entries'],
+        "keypoints": pose_data['indep_all_keypoints']
     }
     response = jsonify(json_data)
     response.headers.add('Access-Control-Allow-Origin', '*')

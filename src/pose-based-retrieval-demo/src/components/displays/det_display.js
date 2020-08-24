@@ -10,9 +10,17 @@ class DetDisplay extends React.Component{
     super(props)
     this.state = {
         file: this.props.file,
-        det_idx: this.props.det_idx
+        det_idx: this.props.det_idx,
+        pose_vector: this.props.pose_vector,
+        keypoint_vector: this.props.keypoint_vector
     }
+    this.selectThisDet = this.selectThisDet.bind(this)
   }
+
+  selectThisDet(){
+    var a = 0
+  }
+
 
   render(){
     var title = "Detection " + this.state.det_idx
@@ -23,7 +31,7 @@ class DetDisplay extends React.Component{
           <Text text_display={title} font_size="1.6em" font_style="normal"/>
         </div>
         <div className="det_display" style={{backgroundImage: "url("+img+")"}}></div>
-        <Button className="myButton" variant="primary">Select</Button>
+        <Button className="myButton" variant="primary" onClick="selectThisDet">Select</Button>
       </div>
     )
   }
