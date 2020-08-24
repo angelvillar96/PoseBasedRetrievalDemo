@@ -10,6 +10,7 @@ import json
 import datetime
 
 from PIL import Image
+import numpy as np
 
 
 def timestamp():
@@ -72,5 +73,21 @@ def encode_img(path):
 
     return encoded_img
 
+
+def preprocess_pose_arrays(pose_vector, keypoints):
+    """
+    Processing pose and keypoints to convert them from strings (from the post form)
+    to numpy arrays or lists
+    """
+
+    pose_vector = pose_vector.split(",")[:-2]
+    pose_vector = [int(p) for p in pose_vector]
+
+    keypoints = keypoints.split(",")
+    keypoints = np.array([int(k) for k in keypoints])
+    n_keypoints = len(keypoints) // 4
+    keypoints = keypoints.reshape(n_keypoints, 4)
+
+    return pose_vector, keypoints
 
 #

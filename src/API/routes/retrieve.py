@@ -16,6 +16,7 @@ from flasgger import swag_from
 from schemas.retrieve import RetrieveSchema
 # from models.retrive import RetriveModel
 from lib.logger import log_function, print_
+from lib.utils import preprocess_pose_arrays, encode_img
 
 
 retrieve_api = Blueprint('api/retrieve', __name__)
@@ -38,7 +39,28 @@ def receive_data():
     ---
     """
 
-    response = jsonify({})
+    # reading variables from the POST data and formatting them
+    print_("Route '/api/retrieve' was called...")
+    data = request.form
+    det_idx = data["det_idx"]
+    pose_vector = data["pose_vector"]
+    keypoints = data["keypoints"]
+    print_(f"Detection {det_idx} was selected for retrieval...")
+    pose_vector, keypoints = preprocess_pose_arrays(pose_vector, keypoints)
+
+    # TODO: Retrieval
+
+    # for debugging purposes we return a placehodler image
+    img_path = os.path.join(os.getcwd(), "resources", "science.jpg")
+    images = [encode_img(path=img_path) for i in range(10)]
+    import numpy as np
+    dist = np.arange(10).tolist()
+    json_data = {
+        "images": images,
+        "dist": dist
+    }
+
+    response = jsonify(json_data)
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response, 200

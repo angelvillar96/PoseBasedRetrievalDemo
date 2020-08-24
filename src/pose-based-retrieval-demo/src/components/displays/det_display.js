@@ -1,5 +1,6 @@
 import React from "react"
 import Button from 'react-bootstrap/Button'
+import axios from 'axios';
 
 import Text from '../titles/text_display'
 import "./styles/display_styles.css"
@@ -14,11 +15,51 @@ class DetDisplay extends React.Component{
         pose_vector: this.props.pose_vector,
         keypoints: this.props.keypoints
     }
-    this.selectThisDet = this.selectThisDet.bind(this)
+    // method used for updating the results. Comes as a prop from the Root App component
+    this.update_results = this.props.update_results.bind(this)
+
+    this.selectInstance = this.selectInstance.bind(this)
   }
 
-  selectThisDet(){
-    var a = 0
+  async selectInstance(){
+    // creating an object to send to API via pose
+    const formData = new FormData()
+    const skip = ["file"]
+    formData.append("timestamp", new Date().toLocaleString())
+    for (var name in this.state) {
+      if(skip.includes(name)){
+        continue
+      }
+      formData.append(name, this.state[name]);
+    }
+
+    var results = undefined;
+    // establishing connection, sending and awaiting response
+    axios({
+      method: 'post',
+      url: 'http://localhost:5000/api/retrieve/',
+      data: formData,
+      headers: {'content-type': 'multipart/form-data',
+                "Accept": "application/json"}
+    })
+    .then(function (response) {
+        //handle success
+        console.log("Success")
+        results = response
+    })
+    .catch(function (response) {
+        //handle error
+        console.log("Error!")
+        results = 0
+    })
+    .finally(() => {
+      // logic executed after having received the response
+      console.log("Finally")
+      if(results !== 0){
+        this.update_results(results)
+      }
+    });
+
   }
 
 
@@ -31,7 +72,7 @@ class DetDisplay extends React.Component{
           <Text text_display={title} font_size="1.6em" font_style="normal"/>
         </div>
         <div className="det_display" style={{backgroundImage: "url("+img+")"}}></div>
-        <Button className="myButton" variant="primary" onClick="selectThisDet">Select</Button>
+        <Button className="myButton" variant="primary" onClick={this.selectInstance}>Select</Button>
       </div>
     )
   }

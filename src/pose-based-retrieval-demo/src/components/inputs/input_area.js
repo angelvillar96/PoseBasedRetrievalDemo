@@ -15,16 +15,22 @@ class InputArea extends React.Component{
   constructor(props){
     super(props)
     this.state = {
+        // files and image urls
         file: undefined,
         file_blob: undefined,
         file_url: "",
         file_name: "",
+        display_name: "",
+        // instance and pose images
         dets: "",
         poses: "",
+        // vectors used for retrieval
         pose_vectors: "",
-        keypoint_vectors: "",
-        display_name: ""
+        keypoints: "",
     }
+    // method used for updating the results. Comes as a prop from the Root App component
+    this.update_results = this.props.update_results.bind(this)
+
     this.update_state = this.update_state.bind(this)
     this.startProcessing = this.startProcessing.bind(this)
     this.post_data = this.post_data.bind(this)
@@ -60,11 +66,11 @@ class InputArea extends React.Component{
       formData.append(name, this.state[name]);
     }
 
-    // establishing connection, sendinng and awaiting response
     var url_object = undefined
     var detections = undefined
     var poses = undefined
     var results = undefined
+    // establishing connection, sending and awaiting response
     axios({
       method: 'post',
       url: 'http://localhost:5000/api/upload/',
@@ -104,7 +110,7 @@ class InputArea extends React.Component{
           poses: poses,
           dets: detections,
           pose_vectors: results.data.pose_vectors,
-          keypoint_vectors: results.data.keypoints,
+          keypoints: results.data.keypoints,
           display_name: "Detections"
         })
       }
@@ -129,11 +135,11 @@ class InputArea extends React.Component{
       var cur_det_display = {
         id:i,
         value: <DetDisplay file={this.state.poses[i]} pose_vector={this.state.pose_vectors[i]}
-                           keypoints={this.state.keypoints} det_idx={i+1}/>
+                           keypoints={this.state.keypoints} det_idx={i+1}
+                           update_results={this.update_results}/>
       }
       det_displays.push(cur_det_display)
     }
-    console.log("n det_displays: " + det_displays.length)
 
     return(
       <Container className="input_area">
