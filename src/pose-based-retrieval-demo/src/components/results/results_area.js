@@ -16,14 +16,14 @@ class ResultsArea extends React.Component{
   }
 
   render(){
-
+    console.log(this.props.metadata)
     // creating a display object for each of the retrievals
     var retrieval_displays = []
     for(var i=0; i<this.props.images.length; i++){
       var cur_retrieval = {
         id:i,
         value: <ResultDisplay file={decodeBase64(this.props.images[i])}
-                              det_idx={i+1} metric={this.props.metrics[i]}/>
+                              det_idx={i+1} metric={this.props.metadata.distance[i]}/>
       }
       retrieval_displays.push(cur_retrieval)
     }

@@ -73,7 +73,7 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approa
         joints, img_name = ret['joints'].numpy(), ret['img']
         center, scale = ret['center'].numpy(), ret['scale'].numpy()
         metadata["img_name"].append(img_name)
-        metadata["distance"].append(dists[j])
+        metadata["distance"].append(dists[j].tolist())
 
         # processing joints for vsualization
         joints[:,-1] = 1  # adding visibility

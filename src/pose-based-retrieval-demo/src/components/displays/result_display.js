@@ -7,7 +7,7 @@ class ResultDisplay extends React.Component{
 
   render(){
     var title = "Retrieval #" + this.props.det_idx + "%aux%" +
-                "Metric: " + this.props.metric
+                "Metric: " + Math.round(this.props.metric * 100) / 100
     var img = URL.createObjectURL(this.props.file)
     return(
       <div className="img_display_area result">

@@ -56,12 +56,10 @@ def receive_data():
 
     # for debugging purposes we return a placehodler image
     img_path = os.path.join(os.getcwd(), "resources", "science.jpg")
-    images = [encode_img(path=img_path) for i in range(10)]
-    import numpy as np
-    dist = np.arange(10).tolist()
+    images = [encode_img(path=path) for path in retrieval_paths]
     json_data = {
         "images": images,
-        "metrics": dist
+        "metadata": metadata
     }
 
     response = jsonify(json_data)
