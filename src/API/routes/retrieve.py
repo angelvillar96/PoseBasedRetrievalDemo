@@ -50,8 +50,9 @@ def receive_data():
     pose_vector, keypoints = preprocess_pose_arrays(pose_vector, keypoints)
 
     # pose based image retrieval
-    pose_based_retrieval(kpt_idx=pose_vector, all_keypoints=keypoints)
-    
+    retrieval_paths, metadata = pose_based_retrieval(kpt_idx=pose_vector,
+                                                     all_keypoints=keypoints)
+
 
     # for debugging purposes we return a placehodler image
     img_path = os.path.join(os.getcwd(), "resources", "science.jpg")

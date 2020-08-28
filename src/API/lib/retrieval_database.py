@@ -9,10 +9,11 @@ import os
 import pickle
 
 import numpy as np
+import cv2
 import hnswlib
 
 from lib.logger import print_
-from CONFIG import CONFIG
+from lib.transforms import get_affine_transform
 
 
 def process_pose_vector(vector, approach, normalize=True):
@@ -43,34 +44,69 @@ def process_pose_vector(vector, approach, normalize=True):
 
     # removing visibility and sampling only desired keypoints
     processed_vector = vector[kpt_idx, 0:2].flatten()
-    dim = processed_vector.shape[-1]
     if(normalize):
-        processed_vector /= np.linalg.norm(processed_vector)
+        processed_vector = processed_vector / np.linalg.norm(processed_vector)
 
     return processed_vector
 
 
-def load_database(db_name):
+def get_db_img(img_name):
     """
-    Loading the pickled file with the database data
+    Loading a full image from the database that has been considered similar by the
+    retrieval algorithm
 
     Args:
     -----
-    db_name: string
-        name of the database to load
+    img_name: string
+        name of the image to load
 
     Returns:
     --------
-    database: dictionary
-        dict containing the data from the retrieval database (img_name, annotations, ...)
+    img: numpy array
+        complete database image with the instance whose pose was considered as similar
     """
 
-    db_path = CONFIG["paths"]["database_path"]
-    pickle_path = os.path.join(db_path, f"database_{db_name}.pkl")
-    with open(pickle_path, "rb") as file:
-        database = pickle.load(file)
+    # determining the database from the image name
+    if("stylized" in img_name):
+        data_dir = "styled_val2017"
+    else:
+        data_dir = "val2017"
+    img_path = os.path.join(os.getcwd(), "database", "imgs", data_dir, img_name)
+    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
-    return database["data"]
+    return img
+
+
+def extract_detection(img, center, scale, shape=(192,256)):
+    """
+    Extracting the person with the similar pose to the query from the complete image
+
+    Args:
+    -----
+    img: numpy array
+        complete database image with the instance whose pose was considered as similar
+    center: numpy array
+        center coordinates of the person instance
+    scale: numpy array
+        scale factor of the person instance to match desired shape
+    shape: tuple
+        size of the crop for the person instace
+
+    Returns:
+    --------
+    instance: numpy array
+        array with the person instance whose pose was considered as similar to the query
+    """
+
+
+    # obtaining cv2 transform to obtain crop from coordinates
+    trans = get_affine_transform(center=center, scale=scale,
+                                 rot=0, output_size=shape)
+    instance = cv2.warpAffine(img, trans, shape, flags=cv2.INTER_LINEAR)
+
+    return instance
+
 
 
 def load_knn(dataset_name, approach, metric="euclidean_distance", normalize=True):
@@ -97,7 +133,7 @@ def load_knn(dataset_name, approach, metric="euclidean_distance", normalize=True
     """
 
     # obtaining names and paths of the data and neighbors objects
-    knn_dir = CONFIG["paths"]["knn_path"]
+    knn_dir =os.path.join(os.getcwd(), "database", "knns")
     name_mask = f"datasets_{dataset_name}_approach_{approach}_metric_{metric}_"\
                 f"norm_{normalize}.pkl"
     knn_path = os.path.join(knn_dir, f"graph_{name_mask}")

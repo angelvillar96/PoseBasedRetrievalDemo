@@ -90,7 +90,6 @@ def get_affine_transform(center, scale, rot, output_size,
     """
 
     if not isinstance(scale, np.ndarray) and not isinstance(scale, list):
-        print(scale)
         scale = np.array([scale, scale])
 
     scale_tmp = scale * 200.0
