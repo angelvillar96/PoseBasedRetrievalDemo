@@ -26,11 +26,11 @@ class DetDisplay extends React.Component{
     const formData = new FormData()
     const skip = ["file"]
     formData.append("timestamp", new Date().toLocaleString())
-    for (var name in this.state) {
+    for (var name in this.props) {
       if(skip.includes(name)){
         continue
       }
-      formData.append(name, this.state[name]);
+      formData.append(name, this.props[name]);
     }
 
     var results = undefined;
