@@ -16,6 +16,7 @@ from flasgger import swag_from
 from schemas.retrieve import RetrieveSchema
 # from models.retrive import RetriveModel
 from lib.logger import log_function, print_
+from lib.pose_based_retrieval import pose_based_retrieval
 from lib.utils import preprocess_pose_arrays, encode_img
 
 
@@ -48,7 +49,9 @@ def receive_data():
     print_(f"Detection {det_idx} was selected for retrieval...")
     pose_vector, keypoints = preprocess_pose_arrays(pose_vector, keypoints)
 
-    # TODO: Retrieval
+    # pose based image retrieval
+    pose_based_retrieval(kpt_idx=pose_vector, all_keypoints=keypoints)
+    
 
     # for debugging purposes we return a placehodler image
     img_path = os.path.join(os.getcwd(), "resources", "science.jpg")

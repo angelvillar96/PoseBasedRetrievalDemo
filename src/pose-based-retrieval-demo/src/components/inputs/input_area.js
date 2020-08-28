@@ -29,7 +29,8 @@ class InputArea extends React.Component{
         keypoints: ""
     }
     // method used for updating the results. Comes as a prop from the Root App component
-    this.update_results = this.props.update_results.bind(this)
+    // this.update_results = this.props.update_results.bind(this)
+    this.update_results = this.props.update_results
 
     this.update_state = this.update_state.bind(this)
     this.startProcessing = this.startProcessing.bind(this)

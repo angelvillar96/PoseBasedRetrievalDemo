@@ -165,6 +165,8 @@ def draw_pose(img, poses, all_keypoints, **kwargs):
             a, b = all_keypoints[idx_a], all_keypoints[idx_b]
             if(a[-1] == 0 or b[-1] == 0):
                 continue
+            if( (a[0]+a[1])<=1 or (b[0]+b[1])<=1):
+                continue
             color = COLORS[str(idx)]
             line = mlines.Line2D(
                     np.array([a[1], b[1]]), np.array([a[0], b[0]]),
