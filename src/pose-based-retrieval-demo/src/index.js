@@ -1,14 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter, Route} from 'react-router-dom';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+import RetrievalPage from "./demos/retrieval_page/retrieval_page.js";
+import IndexPage from "./demos/index_page/index_page.js";
+
+
+ReactDOM.render((
+  <BrowserRouter>
+      <div>
+        <Route exact path="/pose-based-retrieval" component={RetrievalPage}/>
+        <Route path="/" component={IndexPage}/>
+      </div>
+    </BrowserRouter>),
   document.getElementById('root')
 );
 

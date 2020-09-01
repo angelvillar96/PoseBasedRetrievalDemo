@@ -43,7 +43,6 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approa
     keypoints = np.array(keypoints).T
     pose_vector = process_pose_vector(vector=keypoints, approach=approach, normalize=True)
     print(keypoints)
-    print(pose_vector)
 
     # loading knn if necessary
     global KNN
@@ -88,7 +87,5 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approa
         draw_pose(img=instance, poses=[np.arange(17)],
                   all_keypoints=joints, savepath=savepath, savefig=True)
         retrieval_paths.append(savepath)
-
-    print_(metadata)
 
     return retrieval_paths, metadata

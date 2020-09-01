@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './retrieval_page.css';
 
 // self defined components
 import Title from './titles/title.js'
@@ -8,7 +8,7 @@ import Separator from './titles/separator.js'
 import InputArea from "./inputs/input_area.js"
 import ResultsArea from "./results/results_area.js"
 
-class App extends React.Component{
+class RetrievalPage extends React.Component{
 
   constructor(props){
     super(props)
@@ -46,4 +46,4 @@ class App extends React.Component{
   }
 }
 
-export default App;
+export default RetrievalPage;
