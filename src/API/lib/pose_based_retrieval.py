@@ -15,15 +15,18 @@ import hnswlib
 from lib.logger import log_function, print_
 from lib.visualizations import draw_pose
 from lib.retrieval_database import get_db_img, extract_detection, load_knn,\
-    process_pose_vector
+    process_pose_vector, get_neighbors_idxs
 
-DB = None
-KNN = None
-KEYS = None
+DB = None           # data and metadata from the retrieval database
+FEATURES = None     # processed pose vectors from the database
+KNN = None          # 'trained' kNN object used for retrival
+KEYS = None         # image names, corresponding to the keys of the DB-dictionary
+
 
 @log_function
-def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approach="all_kpts",
-                         metric="euclidean_distance", normalize=True, num_retrievals=10):
+def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approach="full_body",
+                         retrieval_method="euclidean_distance", penalization=None,
+                         normalize=True, num_retrievals=10):
     """
     Main orquestrator for the pose based retrieval functionality
 
@@ -47,17 +50,20 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approa
     # loading knn if necessary
     global KNN
     global DB
+    global FEATURES
     global KEYS
     if(KNN is None):
         print_("Loading KNN object and retrieval database...")
-        KNN, DB = load_knn(dataset_name=dataset_name, approach=approach,
-                           metric=metric, normalize=normalize)
+        KNN, DB, FEATURES = load_knn(dataset_name=dataset_name, approach=approach,
+                                     normalize=normalize)
         KEYS = list(DB.keys())
 
     # retrieving similar poses from database
     print_("Retrieving similar poses from database...")
-    idx, dists = KNN.knn_query(pose_vector, k=num_retrievals)
-    idx, dists = idx[0,:], dists[0,:]
+    idx, dists = get_neighbors_idxs(pose_vector, k=num_retrievals, approach=approach,
+                                    retrieval_method=retrieval_method,
+                                    penalization=penalization, knn=KNN,
+                                    database=FEATURES)
     retrievals = [DB[KEYS[j]] for j in idx]
 
     # getting data from each of the retrievals

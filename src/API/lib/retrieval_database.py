@@ -13,8 +13,8 @@ import cv2
 import hnswlib
 
 from lib.logger import print_
+from lib.metrics import confidence_score, oks_score
 from lib.transforms import get_affine_transform
-
 
 def process_pose_vector(vector, approach, normalize=True):
     """
@@ -36,16 +36,25 @@ def process_pose_vector(vector, approach, normalize=True):
         kpt_idx = np.arange(17)  # all keypoints
     elif(approach == "full_body"):
         kpt_idx = np.arange(5, 17)  # from shoulders to hips
+        kpt_idx = np.append(kpt_idx, 0)
     elif(approach == "upper_body"):
         kpt_idx = np.arange(5, 12)  # from shoulders to ankles
+        kpt_idx = np.append(kpt_idx, 0)
     else:
         print(f"ERROR!. Approach {approach}. WTF?")
         exit()
 
     # removing visibility and sampling only desired keypoints
-    processed_vector = vector[kpt_idx, 0:2].flatten()
+    if(len(vector.shape) > 1):
+        processed_vector = vector[kpt_idx, 0:2].flatten()
+    else:
+        processed_vector = vector[kpt_idx]
+    dim = processed_vector.shape[-1]
     if(normalize):
-        processed_vector = processed_vector / np.linalg.norm(processed_vector)
+        norm = np.linalg.norm(processed_vector)
+        epsilon = 1e-5
+        norm = norm if norm > epsilon else 1e-5
+        processed_vector = processed_vector / norm
 
     return processed_vector
 
@@ -108,7 +117,6 @@ def extract_detection(img, center, scale, shape=(192,256)):
     return instance
 
 
-
 def load_knn(dataset_name, approach, metric="euclidean_distance", normalize=True):
     """
     Loading the prefit knn object for the current retrieval task
@@ -138,22 +146,178 @@ def load_knn(dataset_name, approach, metric="euclidean_distance", normalize=True
                 f"norm_{normalize}.pkl"
     knn_path = os.path.join(knn_dir, f"graph_{name_mask}")
     data_path = os.path.join(knn_dir, f"data_{name_mask}")
+    features_path = os.path.join(knn_dir, f"features_{name_mask}")
 
     # making sure those objects exist
     if(not os.path.exists(knn_path)):
         message = f"KNN path '{knn_path}' does not exists..."
         print_(message, message_type="error")
+        exit()
     if(not os.path.exists(data_path)):
         message = f"KNN data '{data_path}' does not exists..."
         print_(message, message_type="error")
+        exit()
+    if(not os.path.exists(features_path)):
+        message = f"KNN features '{features_path}' does not exists..."
+        print_(message, message_type="error")
+        exit()
+
+    # determining dimensionality of the feature vectors
+    if(approach == "full_body"):
+        dim = 26
+    elif(approach == "all_kpts"):
+        dim = 34
+    if(approach == "upper_body"):
+        dim = 14
 
     # loading data
     with open(data_path, "rb") as file:
         data = pickle.load(file)
-    knn = hnswlib.Index(space='l2', dim=34)
+    with open(features_path, "rb") as file:
+        features = pickle.load(file)
+    knn = hnswlib.Index(space='l2', dim=dim)
     knn.load_index(knn_path, max_elements=0)
 
-    return knn, data
+    return knn, data, features
+
+
+def get_neighbors_idxs(query, num_retrievals=10, approach="full_body",
+                       retrieval_method="knn", penalization=None, **kwargs):
+    """
+    Iterating the database measuring distance from query to each dataset element
+    and retrieving the elements with the smallest distance. Not Optimized
+
+    Args:
+    -----
+    query: numpy array
+        pose vector used as retrieval query
+    k: integer
+        number of elements to retrieve from the dataset
+    approach: string
+        strategy followed for the retrieval procedure
+    penalization: string
+        strategy followed to penalize the non-detected keypoints
+
+    Returns:
+    --------
+    idx: list
+        indices of the retrieved elements
+    dist: list
+        distances from the query to the database elements
+    """
+
+    # kNN retrieval approach. Just giving the query to the fit kNN graph => O(log(N))
+    if(retrieval_method == "knn"):
+        if("knn" in kwargs):
+            print_("ERROR! 'knn' object was not given as parameter")
+            exit()
+        knn = kwargs["knn"]
+        idx, dists = knn.knn_query(query, k=num_retrievals)
+        idx, dists = idx[0,:], dists[0,:]
+        return idx, dists
+
+    # defining method for computing metrics other than knn
+    elif(retrieval_method == "euclidean_distance"):
+        compute_metric = lambda x,y,z: np.sqrt(np.sum(np.power(x - y, 2)))
+        confidence = np.ones(query.shape)
+    elif(retrieval_method == "manhattan_distance"):
+        compute_metric = lambda x,y,z: np.abs(np.sum(x - y))
+        confidence = np.ones(query.shape)
+    elif(retrieval_method == "confidence_score"):
+        if("scores" not in kwargs):
+            print_("ERROR! Parameters 'scores' must be given to use to 'confidence_score' " \
+                   "as a retrieval metric...")
+            exit()
+            # confidence = np.ones(query.shape)
+        else:
+            confidence = kwargs["scores"]
+        compute_metric = lambda x,y,z: confidence_score(x, y, z)
+    elif(retrieval_method == "oks_score"):
+        # sigmas for gaussian kernel evaluated at each keypoint
+        confidence = np.ones(query.shape)
+        compute_metric = lambda x,y,z: oks_score(x, y, approach)
+    else:
+        print_(f"ERROR! Retrieval metric '{retrieval_method}' is not defined...")
+        exit()
+
+    # other methods require iterating the dataset => O(N)
+    assert "database" in kwargs, "ERROR! 'database' object was not given as parameter"
+    database = kwargs["database"]
+    n_vectors, dims = database.shape
+
+    if(penalization in ["mean", "max"]):
+        penalization_value = get_penalization_metric(query=query, database=database,
+                                                     penalization=penalization,
+                                                     metric_func=compute_metric,
+                                                     confidence=confidence)
+    epsilon = 1e-5
+    dists = []
+    # print(query)
+    for i, pose_vect in enumerate(database):
+
+        # applying penalizations to ocluded points if necessary
+        # ocluded points are assigned coordinate (0,0)
+        if(penalization == "zero_coord"):
+            cur_query = query
+            cur_confidence = confidence
+            cur_vect = pose_vect
+        # removing kpts that are ocluded either in query or database item
+        elif(penalization == "none" or penalization is None):
+            cur_query, cur_confidence = np.copy(query), np.copy(confidence)
+            cur_vect = np.copy(pose_vect)
+            # obtainign idx of kpts that are 0 in query
+            idx = np.where(np.abs(query) < epsilon)[0]
+            cur_query[idx], cur_vect[idx], cur_confidence[idx] = 0, 0, 0
+        # assigning mean/max value of metrics to ocluded points
+        elif(penalization in ["mean", "max"]):
+            cur_query, cur_confidence = np.copy(query), np.copy(confidence)
+            cur_vect = np.copy(pose_vect)
+            # obtainign idx of kpts that are 0 in (query AND NOT(db))
+            idx = np.where((np.abs(query) < epsilon) & (np.abs(cur_vect) > epsilon))[0]
+            cur_query[idx] = penalization_value
+            cur_vect[idx], cur_confidence[idx] = 0, 0
+        # computing specified metric and saving 'distance' results
+        dist = compute_metric(cur_query, cur_vect, cur_confidence)
+        dists.append(dist)
+
+    idx = np.argsort(dists)[:num_retrievals]
+    dists = [dists[i] for i in idx]
+
+    return idx, dists
+
+
+def get_penalization_metric(query, database, metric_func, penalization="mean",
+                            confidence=None, N=100):
+    """
+    Computing the mean or max distance between query and database
+
+    Args:
+    -----
+    query, database: np arrays
+        pose vectors corresponding to the query and the database
+    metric_func: function
+        function used to compute the metric between vectors
+    penalization: string
+        type of penalization to apply: ['mean', 'max']
+    confidence: numpy array
+        vector with the confidence  with which each query keypoint was detected
+    N: integer
+        number of database elements considered to compute penalization_value
+    """
+
+    assert penalization in ["mean", "max"]
+
+    dists = []
+    for i, cur_vect in enumerate(database):
+        if(i==N):
+            break
+        dist = metric_func(query, cur_vect, confidence)
+        dists.append(dist)
+
+    if(penalization == "mean"):
+        return np.mean(dists)
+    elif(penalization == "max"):
+        return np.max(dists)
 
 
 
