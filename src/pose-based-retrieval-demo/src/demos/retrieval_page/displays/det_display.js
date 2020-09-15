@@ -69,7 +69,7 @@ class DetDisplay extends React.Component{
     return(
       <div className="img_display_area">
         <div>
-          <Text text_display={title} font_size="1.6em" font_style="normal"/>
+          <Text text_display={title} font_size="1.4em" font_style="normal"/>
         </div>
         <div className="det_display" style={{backgroundImage: "url("+img+")"}}></div>
         <Button className="myButton" variant="primary" onClick={this.selectInstance}>Select</Button>
