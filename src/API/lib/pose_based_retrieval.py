@@ -45,7 +45,6 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approa
     keypoints = [keypoints[:, 1], keypoints[:, 0], keypoints[:, 2]]
     keypoints = np.array(keypoints).T
     pose_vector = process_pose_vector(vector=keypoints, approach=approach, normalize=True)
-    print(keypoints)
 
     # loading knn if necessary
     global KNN

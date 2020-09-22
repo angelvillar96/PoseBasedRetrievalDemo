@@ -51,7 +51,8 @@ def receive_data():
 
     # pose based image retrieval
     retrieval_paths, metadata = pose_based_retrieval(kpt_idx=pose_vector,
-                                                     all_keypoints=keypoints)
+                                                     all_keypoints=keypoints,
+                                                     num_retrievals=30)
 
 
     # for debugging purposes we return a placehodler image

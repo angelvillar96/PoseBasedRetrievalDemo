@@ -5,7 +5,8 @@ class Text extends React.Component{
     super(props)
     this.state = {
       font_size: "1.6em",
-      font_style: "normal"
+      font_style: "normal",
+      margin: "auto"
     }
     this.update_style = this.update_style.bind(this)
   }
@@ -25,7 +26,8 @@ class Text extends React.Component{
     this.update_style()
     let style = {
       fontSize: this.state.font_size,
-      fontStyle: this.state.font_style
+      fontStyle: this.state.font_style,
+      margin: this.state.margin
     }
     return(
       <div className="text_displays" style={style}>

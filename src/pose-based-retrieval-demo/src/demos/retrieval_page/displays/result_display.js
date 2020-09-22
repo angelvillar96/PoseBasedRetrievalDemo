@@ -12,7 +12,7 @@ class ResultDisplay extends React.Component{
     return(
       <div className="img_display_area result">
         <div>
-          <Text text_display={title} font_size="1.2em" font_style="normal"/>
+          <Text text_display={title} font_size="1.0em" font_style="normal"/>
         </div>
         <div className="result_display" style={{backgroundImage: "url("+img+")"}}></div>
       </div>

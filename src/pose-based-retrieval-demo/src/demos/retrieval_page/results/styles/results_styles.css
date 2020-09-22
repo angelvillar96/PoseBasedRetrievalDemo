@@ -1,4 +1,11 @@
 
+.resultsTitle{
+  height: 100px;
+  text-align: center;
+  padding-top: 30px;
+  margin: auto;
+}
+
 .resultDisplay{
   width: 100%;
   height: 200px !important;
