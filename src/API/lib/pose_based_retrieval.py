@@ -59,7 +59,7 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approa
 
     # retrieving similar poses from database
     print_("Retrieving similar poses from database...")
-    idx, dists = get_neighbors_idxs(pose_vector, k=num_retrievals, approach=approach,
+    idx, dists = get_neighbors_idxs(pose_vector, num_retrievals=num_retrievals, approach=approach,
                                     retrieval_method=retrieval_method,
                                     penalization=penalization, knn=KNN,
                                     database=FEATURES)

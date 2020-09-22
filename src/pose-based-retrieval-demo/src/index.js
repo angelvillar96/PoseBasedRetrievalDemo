@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Switch, BrowserRouter, Route} from 'react-router-dom';
 
 import RetrievalPage from "./demos/retrieval_page/retrieval_page.js";
 import IndexPage from "./demos/index_page/index_page.js";
@@ -11,10 +11,10 @@ import IndexPage from "./demos/index_page/index_page.js";
 
 ReactDOM.render((
   <BrowserRouter>
-      <div>
+      <Switch>
         <Route exact path="/pose-based-retrieval" component={RetrievalPage}/>
         <Route path="/" component={IndexPage}/>
-      </div>
+      </Switch>
     </BrowserRouter>),
   document.getElementById('root')
 );

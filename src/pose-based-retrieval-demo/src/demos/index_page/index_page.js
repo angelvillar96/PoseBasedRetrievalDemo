@@ -8,19 +8,22 @@ import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap'
 
 import CustomCard from "../../components/card/card.js"
+import DetectionLogo from './imgs/DetectionDemo.png';
+import PoseEstimationLogo from './imgs/PoseEstimationDemo.png';
 
 class IndexPage extends React.Component{
 
   render(){
 
-    const card1 = <CustomCard title="Pose-Based Retrieval Demo"
-                   description='Retrieving images from different datasets based on the \
+    const card1 = <CustomCard title="Pose-Based Retrieval Demo" route="/pose-based-retrieval"
+                   image={PoseEstimationLogo}
+                   description='Retrieving images from different datasets based on the
                                 similiraty between the poses of the person instances.'/>
 
-    const card2 = <CustomCard title="Object Detection Demo"
-                   description='Detecting different relevant objects and actions in \
+    const card2 = <CustomCard title="Object Detection Demo" route="/"
+                   image={DetectionLogo}
+                   description='Detecting different relevant objects and actions in
                                 images from artistical and archeological datasets.'/>
-
 
     return (
       <Container className="input_area">
