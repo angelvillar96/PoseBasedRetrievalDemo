@@ -57,7 +57,7 @@ class ResultsArea extends React.Component{
     console.log("Total retrieved images: " + this.props.images.length)
 
     for(var i=this.state.lim; i<this.state.num_results + this.state.lim; i++){
-      if(i == this.props.images.length){
+      if(i === this.props.images.length){
         break
       }
       title = "Retrieval Results"

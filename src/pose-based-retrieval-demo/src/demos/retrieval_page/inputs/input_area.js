@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import InputImg from "./input_img.js"
 import TakePicture from "./take_picture.js"
+import AdvancedSettings from "./advanced_settings.js"
 import ImgDisplay from "../displays/img_display.js"
 import DetDisplay from "../displays/det_display.js"
 import ArrowButton from "../../../components/arrow_button/arrow_button.js"
@@ -29,7 +30,7 @@ class InputArea extends React.Component{
         pose_vectors: "",
         keypoints: "",
         // auxiliar
-        lim: 0  // index of detections to display, acutalizes with arrows
+        lim: 0,  // index of detections to display, acutalizes with arrows
     }
     // method used for updating the results. Comes as a prop from the Root App component
     // this.update_results = this.props.update_results.bind(this)
@@ -177,6 +178,7 @@ class InputArea extends React.Component{
       }
     }
 
+
     return(
       <Container className="input_area">
         <Row fluid="true">
@@ -195,6 +197,9 @@ class InputArea extends React.Component{
                 <TakePicture className="myButton" update_state={this.update_state}/>
               </Col>
               <Col sm={1} md={1}></Col>
+            </Row>
+            <Row>
+              <AdvancedSettings/>
             </Row>
             <Row className="buttons_area process_button_row">
               <Col sm={3} md={4}></Col>

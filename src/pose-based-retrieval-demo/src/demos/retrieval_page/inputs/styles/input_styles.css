@@ -35,6 +35,23 @@
 
 
 /*#########################
+## Advanced Settings Colapsible styles
+#########################*/
+
+.Collapsible{
+  width: 100%;
+  min-height: 60px;
+  padding-top: 10px;
+}
+.Collapsible__trigger{
+  display: block;
+  text-align: left;
+  width: inherit;
+  background-color: #dddddd;
+}
+
+
+/*#########################
 ## Styles for the Drop Area
 #########################*/
 .dropZoneOverlay, .FileUpload {

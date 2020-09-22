@@ -9,7 +9,7 @@ class ArrowButton extends React.Component{
   render(){
 
     var img;
-    if(this.props.orientation == "left"){
+    if(this.props.orientation === "left"){
       img = arrow_left;
     }else{
       img = arrow_right;
