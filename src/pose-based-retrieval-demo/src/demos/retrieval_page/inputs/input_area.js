@@ -29,6 +29,11 @@ class InputArea extends React.Component{
         // vectors used for retrieval
         pose_vectors: "",
         keypoints: "",
+        // retrieval_properties
+        person_detector: "Faster R-CNN",
+        keypoint_detector: "Baseline HRNet",
+        retrieval_method: "Approx. kNN",
+        retrieval_database: "MS-COCO",
         // auxiliar
         lim: 0,  // index of detections to display, acutalizes with arrows
     }
@@ -199,7 +204,7 @@ class InputArea extends React.Component{
               <Col sm={1} md={1}></Col>
             </Row>
             <Row>
-              <AdvancedSettings/>
+              <AdvancedSettings update_state={this.update_state}/>
             </Row>
             <Row className="buttons_area process_button_row">
               <Col sm={3} md={4}></Col>

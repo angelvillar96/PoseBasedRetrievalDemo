@@ -22,7 +22,7 @@
 }
 
 .process_button_row{
-  padding-top: 0%;
+  padding-top: 0px;
 }
 
 .myButton{
@@ -48,6 +48,18 @@
   text-align: left;
   width: inherit;
   background-color: #dddddd;
+}
+
+.expandable_area{
+  padding-top: 5px;
+  margin-bottom: 20px;
+  border-style: solid;
+  border-color: #dddddd;
+  border-width: 2px;
+}
+
+.expandable_row{
+  padding-bottom: 15px;  
 }
 
 
