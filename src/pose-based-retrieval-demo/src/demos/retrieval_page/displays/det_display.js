@@ -2,7 +2,7 @@ import React from "react"
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
-import Text from '../titles/text_display'
+import Text from '../../../components/text_display/text_display.js'
 import "./styles/display_styles.css"
 
 class DetDisplay extends React.Component{
