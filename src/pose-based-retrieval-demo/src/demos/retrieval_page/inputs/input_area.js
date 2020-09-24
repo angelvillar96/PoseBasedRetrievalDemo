@@ -94,6 +94,7 @@ class InputArea extends React.Component{
     var detections = undefined
     var poses = undefined
     var results = undefined
+    var $this = this
     // establishing connection, sending and awaiting response
     axios({
       method: 'post',
@@ -116,6 +117,12 @@ class InputArea extends React.Component{
           var cur_det = decodeBase64(results.data.detections[i])
           detections.push(cur_det)
         }
+        // cleaning the results section 
+        var clean_retrievals = {
+          images: [],
+          metadata: []
+        }
+        $this.update_results(clean_retrievals)
     })
     .catch(function (response) {
         //handle error
