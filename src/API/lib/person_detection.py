@@ -16,28 +16,53 @@ from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from lib.logger import log_function, print_
 from lib.visualizations import visualize_bbox, visualize_img
 from lib.transforms import TransformDetection
+from lib.neural_nets.EfficientDet import EfficientDetBackbone as EfficientDet
+from lib.neural_nets.HRNet import PoseHighResolutionNet
 
+DETECTOR_NAME = None
 DETECTOR = None
 DETS_EXTRACTOR = None
 
 @log_function
-def setup_detector():
+def setup_detector(detector_name):
     """
     Initializing person detector and loading pretrained model paramters
     """
 
-    # intializing model skeleton
-    print_("Initializing Person Detector")
-    model = fasterrcnn_resnet50_fpn(pretrained=False)
-    in_features = model.roi_heads.box_predictor.cls_score.in_features
-    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, 2)
-    model = DataParallel(model)
+    # intializing model skeleton for the given model type
+    print_(f"Initializing Person Detector: {detector_name}")
+    if(detector_name in ["Faster R-CNN", "Tuned R-CNN"]):
+        model = fasterrcnn_resnet50_fpn(pretrained=False)
+        in_features = model.roi_heads.box_predictor.cls_score.in_features
+        model.roi_heads.box_predictor = FastRCNNPredictor(in_features, 2)
+    elif(detector_name in ["EfficientDet"]):
+        compound_coef = 0
+        anchors_scales = [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
+        anchors_ratios = [(1.0, 1.0), (1.4, 0.7), (0.7, 1.4)]
+        model = EfficientDet(compound_coef=compound_coef, num_classes=1,
+                             ratios=anchors_ratios, scales=anchors_scales,
+                             threshold=0.5, iou_threshold=0.5)
+    model.eval()
 
     # loading pretrained weights
-    print_("Loading detector pretrained parameters ")
-    pretrained_path = os.path.join(os.getcwd(), "resources", "coco_person_detector.pth")
-    checkpoint = torch.load(pretrained_path, map_location='cpu')
-    model.load_state_dict(checkpoint['model_state_dict'])
+    print_("Loading detector pretrained parameters...")
+    if(detector_name == "Faster R-CNN"):
+        model = DataParallel(model)
+        pretrained_path = os.path.join(os.getcwd(), "resources", "coco_faster_rcnn.pth")
+        print_(f"    Loading: {pretrained_path}")
+        checkpoint = torch.load(pretrained_path, map_location='cpu')['model_state_dict']
+    elif(detector_name == "Tuned R-CNN"):
+        model = DataParallel(model)
+        pretrained_path = os.path.join(os.getcwd(), "resources", "arch_faster_rcnn.pth")
+        print_(f"    Loading: {pretrained_path}")
+        checkpoint = torch.load(pretrained_path, map_location='cpu')['model_state_dict']
+    elif(detector_name == "EfficientDet"):
+        pretrained_path = os.path.join(os.getcwd(), "resources", "coco_efficientdet_d0.pth")
+        print_(f"    Loading: {pretrained_path}")
+        checkpoint = torch.load(pretrained_path, map_location='cpu')
+        # model = DataParallel(model)
+
+    model.load_state_dict(checkpoint)
     model = model.eval()
 
     # intiializing object for extracting detections
@@ -48,7 +73,7 @@ def setup_detector():
 
 
 @log_function
-def person_detection(img_path):
+def person_detection(img_path, person_detector):
     """
     Computing a forward pass throught the model to detect the persons in the image
 
@@ -56,6 +81,9 @@ def person_detection(img_path):
     -----
     img_path: string
         path to the image to extract the detections from
+    person_detector: string
+        name of the person detector model to use ['faster_rcnn', 'efficientdet',
+        'tuned-rcnn']
 
     Returns:
     --------
@@ -70,8 +98,10 @@ def person_detection(img_path):
     """
 
     global DETECTOR
-    if(DETECTOR is None):
-        DETECTOR = setup_detector()
+    global DETECTOR_NAME
+    if(DETECTOR is None or DETECTOR_NAME != person_detector):
+        DETECTOR_NAME = person_detector
+        DETECTOR = setup_detector(detector_name=person_detector)
 
     # loading image
     img = cv2.imread(img_path, cv2.IMREAD_COLOR)
@@ -89,18 +119,27 @@ def person_detection(img_path):
     img = img[0,:].cpu().numpy().transpose(1,2,0) / 255
     img_name = os.path.basename(img_path)
     savepath = os.path.join(os.getcwd(), "data", "intermediate_results", img_name)
-    visualize_bbox(img=img, boxes=boxes[0], labels=labels[0],
-                   scores=scores[0], savefig=True, savepath=savepath)
+    # case for image with no detections
+    if(len(labels[0]) == 0 and os.path.exists(savepath)):
+        os.remove(savepath)
+        visualize_img(img=img, savefig=True, savepath=savepath)
+    # case for image with bounding boxes
+    else:
+        visualize_bbox(img=img, boxes=boxes[0], labels=labels[0],
+                       scores=scores[0], savefig=True, savepath=savepath)
 
     # extracting the detected person instances and saving them as independent images
     print_("Extracting person detections from image...")
-    detections, centers, scales = DETS_EXTRACTOR(img=img, list_coords=boxes[0])
+    try:
+        detections, centers, scales = DETS_EXTRACTOR(img=img, list_coords=boxes[0])
+    except Exception as e:
+        detections, centers, scales = [], [], []
     data = {
         "detections": detections,
         "centers": centers,
         "scales": scales
     }
-    n_dets = detections.shape[0]
+    n_dets = len(detections)
     print_(f"{n_dets} person instances have been detected...")
     det_paths = []
     for i, det in enumerate(detections):

@@ -17,8 +17,8 @@ import logging
 import torch
 import torch.nn as nn
 
-from lib.hrnet_config import _C as cfg
-from lib.hrnet_config import update_config
+from lib.neural_nets.hrnet_config import _C as cfg
+from lib.neural_nets.hrnet_config import update_config
 
 BN_MOMENTUM = 0.1
 

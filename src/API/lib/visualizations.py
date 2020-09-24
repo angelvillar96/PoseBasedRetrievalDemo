@@ -111,24 +111,21 @@ def visualize_bbox(img, boxes, labels=None, scores=None, ax=None, **kwargs):
         ax.set_title(kwargs["title"])
 
     # in case of no detections
-    if len(boxes) == 0:
-        return ax
-
-    # displaying BBs
-    for i, bb in enumerate(boxes):
-        x, y = bb[0], bb[1]
-        height = bb[3] - bb[1]
-        width = bb[2] - bb[0]
-        ax.add_patch(plt.Rectangle((x, y), width, height, fill=False,
-                                    edgecolor='red', linewidth=2))
-
-        message = None
-        if(scores is not None):
-            cur_score = scores[i]
-            message = "Score: {:.2f}".format(cur_score)
-        if(message is not None):
-            ax.text(bb[0], bb[1], message, style='italic',
-                    bbox={'facecolor': 'white', 'alpha': 0.5, 'pad': 0})
+    if(len(boxes) > 0):
+        # displaying BBs
+        for i, bb in enumerate(boxes):
+            x, y = bb[0], bb[1]
+            height = bb[3] - bb[1]
+            width = bb[2] - bb[0]
+            ax.add_patch(plt.Rectangle((x, y), width, height, fill=False,
+                                        edgecolor='red', linewidth=2))
+            message = None
+            if(scores is not None):
+                cur_score = scores[i]
+                message = "Score: {:.2f}".format(cur_score)
+            if(message is not None):
+                ax.text(bb[0], bb[1], message, style='italic',
+                        bbox={'facecolor': 'white', 'alpha': 0.5, 'pad': 0})
 
     if("savefig" in kwargs and kwargs["savefig"]==True):
         if("savepath" not in kwargs):

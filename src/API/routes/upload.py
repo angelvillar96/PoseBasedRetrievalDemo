@@ -43,6 +43,8 @@ def receive_data():
     data = request.form
     files = request.files
     file_name = data["file_name"]
+    person_detector = data["person_detector"]
+    keypoint_detector = data["keypoint_detector"]
 
     # relevant paths
     file_path = os.path.join(os.getcwd(), "data", "imgs", file_name)
@@ -55,13 +57,16 @@ def receive_data():
     save_image_from_post(data=storage_element, path=file_path)
 
     # person detection
-    det_img_path, det_instances_path, det_data = person_detection(img_path=file_path)
+    det_img_path, det_instances_path,\
+        det_data = person_detection(img_path=file_path,
+                                    person_detector=person_detector)
 
     # pose estimation
     pose_data = pose_estimation(detections=det_data["detections"],
                                 centers=det_data["centers"],
                                 scales=det_data["scales"],
-                                img_path=file_path)
+                                img_path=file_path,
+                                keypoint_detector=keypoint_detector)
 
     # saving final results
     img = cv2.imread(det_img_path, cv2.IMREAD_COLOR)

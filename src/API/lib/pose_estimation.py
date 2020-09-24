@@ -16,7 +16,7 @@ import torchvision.transforms as transforms
 from lib.logger import log_function, print_
 from lib.pose_parsing import get_final_preds_hrnet, get_max_preds_hrnet, create_pose_entries
 from lib.visualizations import draw_pose
-from lib.HRNet import PoseHighResolutionNet
+from lib.neural_nets.HRNet import PoseHighResolutionNet
 
 
 KEYPOINT_ESTIMATOR = None
@@ -47,7 +47,7 @@ def setup_pose_estimator():
 
 
 @log_function
-def pose_estimation(detections, centers, scales, img_path):
+def pose_estimation(detections, centers, scales, img_path, keypoint_detector):
     """
     Detecting the keypoints for the input images and parsing the human poses
 
@@ -61,6 +61,9 @@ def pose_estimation(detections, centers, scales, img_path):
         scale factor for each person detection
     img_path: string
         path to the image to extract the detections from
+    keypoint_detector: string
+        name of the model to use for keypoint detection ['baseline_hrnet',
+        'styled_hrnet', 'tuned_hrnet']
 
     Returns:
     --------
@@ -68,6 +71,17 @@ def pose_estimation(detections, centers, scales, img_path):
         dict containing the processed information about keypoints and pose objects
         for each person instance and for the full joined image
     """
+
+    # skipping images with no person detections
+    if(len(detections) == 0):
+        pose_data = {
+            "indep_pose_entries": np.array([]),
+            "indep_all_keypoints": np.array([]),
+            "pose_entries": np.array([]),
+            "all_keypoints": np.array([]),
+            "pose_paths": []
+        }
+        return pose_data
 
     # initializing the model if necessary
     global KEYPOINT_ESTIMATOR

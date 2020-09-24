@@ -47,6 +47,7 @@ class InputArea extends React.Component{
     this.get_disp = this.get_disp.bind(this)
     this.next_dets = this.next_dets.bind(this)
     this.previous_dets = this.previous_dets.bind(this)
+    this.get_retrieval_settings = this.get_retrieval_settings.bind(this)
   }
 
   // method that updates the state when a child component is changed
@@ -54,6 +55,17 @@ class InputArea extends React.Component{
     await this.setState({
       [state_id]:value
     });
+  }
+
+  // method for reading the retrieval settings from a child component
+  get_retrieval_settings(){
+    var retrieval_settings = {
+      "person_detector": this.state.person_detector,
+      "keypoint_detector": this.state.keypoint_detector,
+      "retrieval_method": this.state.retrieval_method,
+      "retrieval_database": this.state.retrieval_database
+    }
+    return retrieval_settings
   }
 
   // final checks before calling the API
@@ -175,7 +187,8 @@ class InputArea extends React.Component{
         id:i,
         value: <DetDisplay file={this.state.poses[i]} pose_vector={this.state.pose_vectors[i]}
                            keypoints={this.state.keypoints} det_idx={i+1}
-                           update_results={this.update_results}/>
+                           update_results={this.update_results}
+                           get_retrieval_settings={this.get_retrieval_settings}/>
       }
       det_displays.push(cur_det_display)
       if((i >= this.state.lim) && (i < this.state.lim + 2)){

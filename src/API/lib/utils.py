@@ -67,6 +67,8 @@ def encode_img(path):
         encode version of the input data and casted as a string to fit into a json object
     """
 
+    if(not os.path.exists(path)):
+        return None
     with open(path, "rb") as file:
         encoded_img = str(base64.b64encode(file.read()))
         encoded_img = encoded_img[2:-1]

@@ -13,7 +13,8 @@ class DetDisplay extends React.Component{
         file: this.props.file,
         det_idx: this.props.det_idx,
         pose_vector: this.props.pose_vector,
-        keypoints: this.props.keypoints
+        keypoints: this.props.keypoints,
+        get_retrieval_settings: this.props.get_retrieval_settings
     }
     // method used for updating the results. Comes as a prop from the Root App component
     this.update_results = this.props.update_results.bind(this)
@@ -31,6 +32,11 @@ class DetDisplay extends React.Component{
         continue
       }
       formData.append(name, this.props[name]);
+    }
+    // adding the retrueval settings read from the input are
+    var retrieval_settings = this.props.get_retrieval_settings()
+    for (var setting in retrieval_settings) {
+      formData.append(setting, retrieval_settings[setting]);
     }
 
     var results = undefined;
