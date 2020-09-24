@@ -1,6 +1,6 @@
 import React from "react"
 
-import "./styles/separator.css"
+import "./style.css"
 
 class Separator extends React.Component{
   constructor(props){

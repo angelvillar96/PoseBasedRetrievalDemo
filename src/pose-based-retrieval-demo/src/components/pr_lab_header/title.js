@@ -1,12 +1,12 @@
 import React from "react"
 import {Container, Row, Col} from 'react-bootstrap'
 
-import "./styles/titles.css"
+import "./style.css"
 import fau_logo from './images/fau_logo.png';
 import pr_lab_logo from './images/pr_lab_logo.png';
 
 
-class Title extends React.Component{
+class Header extends React.Component{
 
   render(){
     return(
@@ -17,7 +17,7 @@ class Title extends React.Component{
             </Col>
             <Col xs={8} md={6}>
               <div className="main-title">
-                Pose-Based Image Retrieval Demo
+                {this.props.title}
               </div>
             </Col>
             <Col xs={2} md={3}>
@@ -28,6 +28,6 @@ class Title extends React.Component{
   )}
 }
 
-export default Title;
+export default Header;
 
 //

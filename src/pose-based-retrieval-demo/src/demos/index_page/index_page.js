@@ -7,6 +7,8 @@ Index page where the user selects the demo that he wants to run
 import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap'
 
+import Header from '../../components/pr_lab_header/title.js'
+import Separator from '../../components/separator/separator.js'
 import CustomCard from "../../components/card/card.js"
 import DetectionLogo from './imgs/DetectionDemo.png';
 import PoseEstimationLogo from './imgs/PoseEstimationDemo.png';
@@ -26,16 +28,23 @@ class IndexPage extends React.Component{
                                 images from artistical and archeological datasets.'/>
 
     return (
-      <Container className="input_area">
-        <Row fluid="true">
-          <Col>{card1}</Col>
-          <Col>{card2}</Col>
-        </Row>
-        <Row fluid="true">
-          <Col><div/></Col>
-          <Col><div/></Col>
-        </Row>
-      </Container>
+      <div>
+        <Header title={"Digital Humanities Demos"}/>
+        <Separator/>
+        <Container className="input_area">
+          <Row fluid="true">
+            <Col sm={2}></Col>
+            <Col sm={4}>{card1}</Col>
+            <Col sm={1}></Col>
+            <Col sm={4}>{card2}</Col>
+            <Col sm={1}></Col>
+          </Row>
+          <Row fluid="true">
+            <Col><div/></Col>
+            <Col><div/></Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }
