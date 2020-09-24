@@ -18,12 +18,12 @@ from lib.pose_parsing import get_final_preds_hrnet, get_max_preds_hrnet, create_
 from lib.visualizations import draw_pose
 from lib.neural_nets.HRNet import PoseHighResolutionNet
 
-
+ESTIMATOR_NAME = None
 KEYPOINT_ESTIMATOR = None
 NORMALIZER = None
 
 @log_function
-def setup_pose_estimator():
+def setup_pose_estimator(estimator_name):
     """
     Initializing the pretrained pose estimation model
     """
@@ -32,9 +32,22 @@ def setup_pose_estimator():
     model = PoseHighResolutionNet(is_train=False)
 
     print_("Loading pretrained model parameters...")
-    pretrained_path = os.path.join(os.getcwd(), "resources", "coco_hrnet_w32_256x192.pth")
-    checkpoint = torch.load(pretrained_path, map_location='cpu')
-    model.load_state_dict(checkpoint)
+    if(estimator_name == "Baseline HRNet"):
+        pretrained_path = os.path.join(os.getcwd(), "resources", "coco_hrnet_w32_256x192.pth")
+        checkpoint = torch.load(pretrained_path, map_location='cpu')
+        model.load_state_dict(checkpoint)
+        model = DataParallel(model)
+    elif(estimator_name == "Styled HRNet"):
+        model = DataParallel(model)
+        pretrained_path = os.path.join(os.getcwd(), "resources", "styled_hrnet_w32_256x192.pth")
+        checkpoint = torch.load(pretrained_path, map_location='cpu')['model_state_dict']
+        model.load_state_dict(checkpoint)
+    elif(estimator_name == "Tuned HRNet"):
+        # TODO: replace with actual tuned HRNet model
+        model = DataParallel(model)
+        pretrained_path = os.path.join(os.getcwd(), "resources", "styled_hrnet_w32_256x192.pth")
+        checkpoint = torch.load(pretrained_path, map_location='cpu')['model_state_dict']
+        model.load_state_dict(checkpoint)
     model = model.eval()
 
     # intiializing preprocessing method
@@ -85,8 +98,10 @@ def pose_estimation(detections, centers, scales, img_path, keypoint_detector):
 
     # initializing the model if necessary
     global KEYPOINT_ESTIMATOR
-    if(KEYPOINT_ESTIMATOR is None):
-        KEYPOINT_ESTIMATOR = setup_pose_estimator()
+    global ESTIMATOR_NAME
+    if(KEYPOINT_ESTIMATOR is None or ESTIMATOR_NAME != keypoint_detector):
+        ESTIMATOR_NAME = keypoint_detector
+        KEYPOINT_ESTIMATOR = setup_pose_estimator(keypoint_detector)
 
     # preprocessing the detections
     print_("Preprocessing person detections...")
