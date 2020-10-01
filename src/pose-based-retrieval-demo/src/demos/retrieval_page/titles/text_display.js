@@ -29,13 +29,9 @@ class Text extends React.Component{
       fontStyle: this.state.font_style,
       margin: this.state.margin
     }
-    let align = {
-      textAlign: this.props.align
-    }
     return(
       <div className="text_displays" style={style}>
-        {this.props.text_display.split('%aux%').map( (it, i) =>
-          <div style={align} key={'x'+i}>{it}</div> )}
+        {this.props.text_display.split('%aux%').map( (it, i) => <div key={'x'+i}>{it}</div> )}
       </div>
     )
   }

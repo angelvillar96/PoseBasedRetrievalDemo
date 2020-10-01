@@ -9,7 +9,6 @@ import {Container, Row, Col} from 'react-bootstrap'
 
 import Header from '../../components/pr_lab_header/title.js'
 import Separator from '../../components/separator/separator.js'
-import Text from '../../components/text_display/text_display.js'
 import CustomCard from "../../components/card/card.js"
 import DetectionLogo from './imgs/DetectionDemo.png';
 import PoseEstimationLogo from './imgs/PoseEstimationDemo.png';
@@ -45,8 +44,6 @@ class IndexPage extends React.Component{
             <Col><div/></Col>
           </Row>
         </Container>
-        <Separator/>
-        <Text text_display="by Angel Villar-Corrales" font_size="1.3em" align="center"/>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React from "react"
 
-import Text from '../../../components/text_display/text_display.js'
+import Text from '../titles/text_display'
 import "./styles/display_styles.css"
 
 class ImgDisplay extends React.Component{

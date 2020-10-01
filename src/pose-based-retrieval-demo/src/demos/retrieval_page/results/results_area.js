@@ -3,7 +3,7 @@ import {Container, Row, Col} from 'react-bootstrap'
 
 import ResultDisplay from "../displays/result_display.js"
 import ArrowButton from "../../../components/arrow_button/arrow_button.js"
-import Text from '../../../components/text_display/text_display.js'
+import Text from '../titles/text_display'
 
 import {decodeBase64} from '../../lib/utils.js'
 import "./styles/results_styles.css"

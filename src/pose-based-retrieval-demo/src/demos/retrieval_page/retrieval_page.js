@@ -5,7 +5,7 @@ import {Container, Row, Col} from 'react-bootstrap'
 // self defined components
 import Header from '../../components/pr_lab_header/title.js'
 import Separator from '../../components/separator/separator.js'
-import Text from '../../components/text_display/text_display.js'
+import Text from './titles/text_display'
 import InputArea from "./inputs/input_area.js"
 import ResultsArea from "./results/results_area.js"
 
@@ -45,9 +45,13 @@ class RetrievalPage extends React.Component{
               <ResultsArea images={this.state.images} metadata={this.state.metadata}/>
             </Col>
           </Row>
+          <Row>
+            <Separator/>
+            <Col md={12}>
+              <Text text_display="by Angel Villar-Corrales" font_size="1.3em"/>
+            </Col>
+          </Row>
         </Container>
-        <Separator/>
-        <Text text_display="by Angel Villar-Corrales" font_size="1.3em" align="center"/>
       </div>
     );
   }
