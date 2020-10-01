@@ -44,7 +44,7 @@ class AdvancedSettings extends React.Component{
                    onTriggerOpening={this.open}
                    onTriggerClosing={this.close}
                    open={false}>
-        <Container className="expandable_area">
+        <div className="expandable_area">
           <Row className="expandable_row">
             <Col sm={1}></Col>
             <Col sm={4}>
@@ -75,7 +75,7 @@ class AdvancedSettings extends React.Component{
             </Col>
             <Col sm={1}></Col>
           </Row>
-        </Container>
+        </div>
       </Collapsible>
     );
   }

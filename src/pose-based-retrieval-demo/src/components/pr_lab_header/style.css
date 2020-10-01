@@ -11,6 +11,8 @@
 .image-logo{
   padding-bottom: 10px;
   object-fit: contain;
+  display: block;
+  margin: auto;
   max-width: 75%;
   max-height: 75%;
 }
@@ -18,4 +20,5 @@
 .main-title{
   font-size: 2.2em;
   font-weight: 600;
+  text-align: center;
 }

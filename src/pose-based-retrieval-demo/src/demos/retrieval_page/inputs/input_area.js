@@ -205,7 +205,7 @@ class InputArea extends React.Component{
 
 
     return(
-      <Container className="input_area">
+      <div className="input_area">
         <Row fluid="true">
           <Col md={12}>
             <Row fluid="true">
@@ -249,7 +249,7 @@ class InputArea extends React.Component{
             {rightArrow}
           </Col>
         </Row>
-      </Container>
+      </div>
     )
   }
 

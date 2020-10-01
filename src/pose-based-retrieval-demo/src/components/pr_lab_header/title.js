@@ -10,7 +10,7 @@ class Header extends React.Component{
 
   render(){
     return(
-        <Container className="title-container">
+        <div className="title-container">
           <Row fluid="true">
             <Col xs={2} md={3}>
               <img src={fau_logo} alt="FAU Logo" className="image-logo"/>
@@ -24,7 +24,7 @@ class Header extends React.Component{
               <img src={pr_lab_logo} alt="Pattern Recognition Lab Logo" className="image-logo"/>
             </Col>
           </Row>
-        </Container>
+        </div>
   )}
 }
 

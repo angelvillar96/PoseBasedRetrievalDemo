@@ -74,7 +74,7 @@ class ResultsArea extends React.Component{
 
 
     return(
-      <Container>
+      <div>
         <Row className="resultsTitle">
           <Text text_display={title} font_size="1.4em" font_style="normal"/>
         </Row>
@@ -93,7 +93,7 @@ class ResultsArea extends React.Component{
             {rightArrow}
           </Col>
         </Row>
-      </Container>
+      </div>
     )
   }
 }
