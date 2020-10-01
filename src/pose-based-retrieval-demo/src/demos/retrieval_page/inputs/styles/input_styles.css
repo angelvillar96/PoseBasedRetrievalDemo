@@ -14,6 +14,7 @@
 }
 .detsArea{
   margin-top: 2%;
+  display: flex;
 }
 
 .buttons_area{
@@ -59,7 +60,7 @@
 }
 
 .expandable_row{
-  padding-bottom: 15px;  
+  padding-bottom: 15px;
 }
 
 
