@@ -1,6 +1,6 @@
 import React from "react"
 import {Container, Row, Col} from 'react-bootstrap'
-import Button from 'react-bootstrap/Button'
+import {Button} from 'react-bootstrap'
 import axios from 'axios';
 
 import InputImg from "./input_img.js"
@@ -117,7 +117,7 @@ class InputArea extends React.Component{
           var cur_det = decodeBase64(results.data.detections[i])
           detections.push(cur_det)
         }
-        // cleaning the results section 
+        // cleaning the results section
         var clean_retrievals = {
           images: [],
           metadata: []
