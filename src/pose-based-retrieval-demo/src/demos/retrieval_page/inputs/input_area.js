@@ -34,7 +34,7 @@ class InputArea extends React.Component{
         keypoint_detector: "Baseline HRNet",
         retrieval_method: "Approx. kNN",
         retrieval_database: "MS-COCO",
-        // auxiliar
+        // auxiliar state variables
         lim: 0,  // index of detections to display, acutalizes with arrows
     }
     // method used for updating the results. Comes as a prop from the Root App component
