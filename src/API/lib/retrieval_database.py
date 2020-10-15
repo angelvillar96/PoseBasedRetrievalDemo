@@ -78,6 +78,8 @@ def get_db_img(img_name):
     # determining the database from the image name
     if("stylized" in img_name):
         data_dir = "styled_val2017"
+    elif(img_name[0] in ["w", "e", "v", "b"]):
+        data_dir = "arch_data"
     else:
         data_dir = "val2017"
     img_path = os.path.join(os.getcwd(), "database", "imgs", data_dir, img_name)

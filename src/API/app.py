@@ -31,7 +31,7 @@ def create_app():
     }
     swagger = Swagger(app)
 
-    app.register_blueprint(home_api, url_prefix='/api')
+    app.register_blueprint(home_api, url_prefix='/')
     app.register_blueprint(upload_api, url_prefix='/api/upload')
     app.register_blueprint(retrieve_api, url_prefix='/api/retrieve')
     app.register_blueprint(progress_api, url_prefix='/api/get_progress')

@@ -25,7 +25,7 @@ def home():
     ---
     """
 
-    print_("Route '/api' was callied...")
+    print_("Route '/' was callied...")
     result = HomeModel()
     result = HomeSchema().dump(result)
     print_(result)

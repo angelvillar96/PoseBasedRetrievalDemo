@@ -24,7 +24,7 @@ KEYS = None         # image names, corresponding to the keys of the DB-dictionar
 
 
 @log_function
-def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['coco']", approach="full_body",
+def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['arch_data']", approach="full_body",
                          retrieval_method="euclidean_distance", penalization=None,
                          normalize=True, num_retrievals=10):
     """
