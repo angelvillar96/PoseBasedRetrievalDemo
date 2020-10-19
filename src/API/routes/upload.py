@@ -14,7 +14,7 @@ from flasgger import swag_from
 
 from schemas.upload import UploadSchema
 # from models.upload import UploadModel
-from lib.utils import timestamp, save_image_from_post, encode_img
+from lib.utils import timestamp, save_image_from_post, encode_img, create_directory
 from lib.logger import log_function, print_
 from lib.person_detection import setup_detector, person_detection
 from lib.pose_estimation import setup_pose_estimator, pose_estimation
@@ -46,10 +46,13 @@ def receive_data():
     person_detector = data["person_detector"]
     keypoint_detector = data["keypoint_detector"]
 
-    # relevant paths
-    file_path = os.path.join(os.getcwd(), "data", "imgs", file_name)
-    final_path = os.path.join(os.getcwd(), "data", "final_results",
-                              "others", file_name)
+    # relevant paths/dirs for storing results
+    imgs_path = os.path.join(os.getcwd(), "data", "imgs")
+    create_directory(imgs_path)
+    full_dets_path = os.path.join(os.getcwd(), "data", "final_results", "full_dets")
+    create_directory(full_dets_path)
+    file_path = os.path.join(imgs_path, file_name)
+    final_path = os.path.join(full_dets_path, file_name)
 
     # saving data in directory, cause why not?
     print_("Storing query in data directory...")
