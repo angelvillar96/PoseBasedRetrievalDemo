@@ -17,6 +17,8 @@ from routes.retrieve import retrieve_api
 from routes.progress import progress_api
 from lib.logger import Logger, log_function, print_
 
+app = Flask(__name__)
+cors = CORS(app)
 
 @log_function
 def create_app():
@@ -24,8 +26,6 @@ def create_app():
     Initialization of the API
     """
 
-    app = Flask(__name__)
-    cors = CORS(app)
     app.config['SWAGGER'] = {
         'title': 'Flask API Starter Kit',
     }
@@ -35,7 +35,8 @@ def create_app():
     app.register_blueprint(upload_api, url_prefix='/api/upload')
     app.register_blueprint(retrieve_api, url_prefix='/api/retrieve')
     app.register_blueprint(progress_api, url_prefix='/api/get_progress')
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True,host='0.0.0.0')
+    #
     return
 
 
@@ -52,5 +53,6 @@ if __name__ == '__main__':
     logger.log_info(message=message, message_type="start")
 
     app = create_app()
+
 
 #

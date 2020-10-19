@@ -16,6 +16,7 @@ from lib.logger import log_function, print_
 from lib.visualizations import draw_pose
 from lib.retrieval_database import get_db_img, extract_detection, load_knn,\
     process_pose_vector, get_neighbors_idxs
+from lib.utils import create_directory
 
 DB = None           # data and metadata from the retrieval database
 FEATURES = None     # processed pose vectors from the database
@@ -71,6 +72,7 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['arch_data']", a
         "distance": []
     }
     retrieval_paths = []
+    create_directory(os.path.join(os.getcwd(), "data", "final_results", "retrievals"))
     for j,ret in enumerate(retrievals):
         savepath = os.path.join(os.getcwd(), "data", "final_results",
                                 "retrievals", f"retrieval_{j+1}.png")

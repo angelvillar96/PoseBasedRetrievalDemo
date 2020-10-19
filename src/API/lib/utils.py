@@ -13,6 +13,17 @@ from PIL import Image
 import numpy as np
 
 
+def create_directory(path):
+    """
+    Checking if a directory exists, and creating it if it doesnt
+    """
+
+    if(not os.path.exists(path)):
+        os.makedirs(path)
+
+    return
+
+
 def timestamp():
     """
     Obtaining the current timestamp in an human-readable way

@@ -18,6 +18,7 @@ from lib.visualizations import visualize_bbox, visualize_img
 from lib.transforms import TransformDetection
 from lib.neural_nets.EfficientDet import EfficientDetBackbone as EfficientDet
 from lib.neural_nets.HRNet import PoseHighResolutionNet
+from lib.utils import create_directory
 
 DETECTOR_NAME = None
 DETECTOR = None
@@ -118,6 +119,7 @@ def person_detection(img_path, person_detector):
     print_("Obtaining intermediate detector visualization...")
     img = img[0,:].cpu().numpy().transpose(1,2,0) / 255
     img_name = os.path.basename(img_path)
+    create_directory(os.path.join(os.getcwd(), "data", "intermediate_results"))
     savepath = os.path.join(os.getcwd(), "data", "intermediate_results", img_name)
     # case for image with no detections
     if(len(labels[0]) == 0 and os.path.exists(savepath)):
@@ -142,6 +144,8 @@ def person_detection(img_path, person_detector):
     n_dets = len(detections)
     print_(f"{n_dets} person instances have been detected...")
     det_paths = []
+
+    create_directory(os.path.join(os.getcwd(), "data", "final_results", "detection"))
     for i, det in enumerate(detections):
         det_name = img_name.split(".")[0] + f"_det_{i}." + img_name.split(".")[1]
         det_path = os.path.join(os.getcwd(), "data", "final_results", "detection", det_name)

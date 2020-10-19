@@ -17,6 +17,7 @@ from lib.logger import log_function, print_
 from lib.pose_parsing import get_final_preds_hrnet, get_max_preds_hrnet, create_pose_entries
 from lib.visualizations import draw_pose
 from lib.neural_nets.HRNet import PoseHighResolutionNet
+from lib.utils import create_directory
 
 ESTIMATOR_NAME = None
 KEYPOINT_ESTIMATOR = None
@@ -139,6 +140,7 @@ def pose_estimation(detections, centers, scales, img_path, keypoint_detector):
     img_name = os.path.basename(img_path)
     img = cv2.imread(img_path, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    create_directory(os.path.join(os.getcwd(), "data", "final_results", "pose_estimation"))
     savepath = os.path.join(os.getcwd(), "data", "final_results", "pose_estimation", img_name)
     draw_pose(img/255, pose_entries, all_keypoints, savefig=True, savepath=savepath)
     pose_paths = []

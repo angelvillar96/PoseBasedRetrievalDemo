@@ -10,7 +10,8 @@ __pycache__/
 src/API/data
 src/API/database
 resources
-logs.txt
+-logs.txt
+.ftpconfig
 
 # Distribution / packaging
 .Python
