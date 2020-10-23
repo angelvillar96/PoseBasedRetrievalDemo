@@ -7,9 +7,8 @@ In this README, we explain in detail the installation procedure, the functionali
 
  * [1. Getting Started](#getting-started)
  * [2. Directory Structure](#directory-structure)
- * [3. Quick Guide](#quick-guide)
- * [4. Adding New Routes](#adding-new-routes)
- * [5. Contact](#contact)
+ * [3. Adding New Routes](#adding-new-routes)
+ * [4. Contact](#contact)
 
 
 ## Getting Started
@@ -69,6 +68,11 @@ API
 |   ├── pose_parsing.py
 |   └── ...
 |   
+├── models/
+|   ├── home.py
+|   ├── retrieve.py
+|   └── ...
+|
 ├── resources/
 |   ├── arch_faster_rcnn.pth
 |   └── ...
@@ -84,10 +88,32 @@ API
 |   └── ...
 |
 ├── app.py
-├── requirements.txt
 ├── README.md
+└── requirements.txt
 ```
 
+We now give a short overview of the different directories and files, emphasizing their role and purpose:
+
+ - **data/:** This directory is generated automatically during the execution of the API. Here, the query images as well as the intermediate and final results are stored. This automatic storage of all data allows us to perform loggin, debugging and visualization purposes. **TODO** Store metadata.
+
+- **database/**: Under this directory we store the databases, images from datasets and objects used for retrieval purposes (e.g., kNN trees and graphs).
+
+- **lib/**: Source code libraries containing methods and classes for different purposes: person detection, pose estimation, image retrueval, utils, visualization, ...  
+
+- **models/** Coming soon
+
+- **resources/**: Pretrained deep learning models used for person detection and pose estimation.
+
+- **routes/**: Code for the API routes and calls. Each file under this directory handles a different route (e.g., uploading an image for person detection and pose estimation, or retrieving given a pose.)
+
+- **schemas/**: Coming Soon
+
+For more detailed documentation of the particular API calls, including input parameters and returned json forms, check the [official Swagger documentation](http://131.188.35.240:5000/apidocs/) (Coming Soon!).
+
+
+## Adding New Routes
+
+In this section, we show how to add new routes to establish API calls for your application.
 
 
 ## Contact

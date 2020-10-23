@@ -6,7 +6,7 @@ from schemas.home import HomeSchema
 from models.home import HomeModel
 from lib.logger import log_function, print_
 
-home_api = Blueprint('api', __name__)
+home_api = Blueprint('api/example', __name__)
 
 @home_api.route('/')
 @swag_from({
