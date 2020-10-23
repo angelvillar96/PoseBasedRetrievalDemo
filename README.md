@@ -40,7 +40,7 @@ The different databases and deep learning models are stored in one of our server
 
 For further implementation details, please check the specific documentation:
 
-- | Documentation | Root Directory
+Tool | Documentation | Root Directory
 ------------ | ------------- | -------------
 <!-- Start Row --> Web-APP | [Readme](https://github.com/angelvillar96/PoseBasedRetrievalDemo/blob/master/src/pose-based-retrieval-demo/README.md) | [Web-APP Directory](https://github.com/angelvillar96/PoseBasedRetrievalDemo/tree/master/src/pose-based-retrieval-demo) <!-- Finish Row -->
 <!-- Start Row --> API | [Readme](https://github.com/angelvillar96/PoseBasedRetrievalDemo/blob/master/src/API/README.md) | [API Directory](https://github.com/angelvillar96/PoseBasedRetrievalDemo/tree/master/src/API) <!-- Finish Row -->
