@@ -42,9 +42,8 @@ For further implementation details, please check the specific documentation:
 
 Tool | Documentation | Root Directory
 ------------ | ------------- | -------------
-<!-- Start Row --> Web-APP | [Readme](https://github.com/angelvillar96/PoseBasedRetrievalDemo/blob/master/src/pose-based-retrieval-demo/README.md) | [Web-APP Directory](https://github.com/angelvillar96/PoseBasedRetrievalDemo/tree/master/src/pose-based-retrieval-demo) <!-- Finish Row -->
-<!-- Start Row --> API | [Readme](https://github.com/angelvillar96/PoseBasedRetrievalDemo/blob/master/src/API/README.md) | [API Directory](https://github.com/angelvillar96/PoseBasedRetrievalDemo/tree/master/src/API) <!-- Finish Row -->
-
+Web-APP | [Readme](https://github.com/angelvillar96/PoseBasedRetrievalDemo/blob/master/src/pose-based-retrieval-demo/README.md) | [Web-APP Directory](https://github.com/angelvillar96/PoseBasedRetrievalDemo/tree/master/src/pose-based-retrieval-demo)
+API | [Readme](https://github.com/angelvillar96/PoseBasedRetrievalDemo/blob/master/src/API/README.md) | [API Directory](https://github.com/angelvillar96/PoseBasedRetrievalDemo/tree/master/src/API)
 
 ## Quick Guide
 
