@@ -4,7 +4,8 @@ Implementation of methods for computing pose similarity metrics for retrieval
 
 import numpy as np
 
-import lib.retrieval_database as retrieval_database
+# import lib.retrieval_database as retrieval_database
+from lib import retrieval_database
 
 
 def confidence_score(query, pose_db, confidence):
