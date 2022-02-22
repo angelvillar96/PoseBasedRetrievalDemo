@@ -117,8 +117,8 @@ def pose_estimation(detections, centers, scales, img_path, keypoint_detector):
     # extracting keypoint coordinates and confidence values from heatmaps
     print_("Extracting keypoints from heatmaps...")
     keypoint_coords,\
-        max_vals_coords = get_max_preds_hrnet(scaled_heats=scaled_dets.detach().numpy())
-    keypoints, max_vals, _ = get_final_preds_hrnet(heatmaps=keypoint_dets.detach().numpy(),
+        max_vals_coords = get_max_preds_hrnet(scaled_heats=scaled_dets.detach().cpu().numpy())
+    keypoints, max_vals, _ = get_final_preds_hrnet(heatmaps=keypoint_dets.detach().cpu().numpy(),
                                                   center=centers, scale=scales)
 
     # parsing poses by combining and joining keypoits
