@@ -20,7 +20,7 @@ marshmallow==3.8.0
 matplotlib==3.3.2
 mistune==0.8.4
 numpy==1.19.2
-Pillow==2.2.2
+Pillow
 pybind11==2.5.0
 pyparsing==2.4.7
 pyrsistent==0.17.3

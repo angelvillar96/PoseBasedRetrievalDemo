@@ -1,0 +1,27 @@
+arthist_class_dict = {
+    "column": 0,
+    "putto": 1,
+    "mary": 2,
+    "gabriel": 3,
+    "book": 4,
+    "gabriel_2": 5,
+    "dove": 6,
+    "bookrest": 7,
+    "flower vase": 8,
+    "bed": 9,
+    "annunciation": 10,
+    "putto_2": 11,
+    "scepter": 12,
+    "gabriel_3": 13,
+    "scepter_2": 14,
+    "scepter_3": 15,
+    "basket": 16,
+    "na1": 17,
+    "na2": 18,
+    "na3": 19,
+    "na4": 20,
+    "na5": 21,
+    "na6": 22,
+}
+arthist_label_to_str = {v: k for k, v in arthist_class_dict.items()}
+arthist_classes = list(arthist_class_dict.values())

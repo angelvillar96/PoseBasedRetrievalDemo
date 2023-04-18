@@ -1,0 +1,99 @@
+
+/*#########################
+## Styles for the Input Area
+#########################*/
+.input_area{
+  position: relative;
+  margin-top: 5%;
+  margin-left: 0%;
+  margin-right: 10%;
+  margin-bottom: 5%;
+  font-size: 1em;
+  flex-direction: column;
+  align-items: center;
+}
+.detsArea{
+  margin-top: 2%;
+}
+
+.buttons_area{
+  padding-top: 3%;
+  margin: 0 auto !important;
+}
+
+.process_button_row{
+  padding-top: 0px;
+}
+
+.myButton{
+  margin: auto;
+}
+
+.progress_bar_style{
+  width: 80%;
+}
+
+
+/*#########################
+## Advanced Settings Colapsible styles
+#########################*/
+
+.Collapsible{
+  width: 100%;
+  min-height: 60px;
+  padding-top: 10px;
+}
+.Collapsible__trigger{
+  display: block;
+  text-align: left;
+  width: inherit;
+  background-color: #dddddd;
+}
+
+.expandable_area{
+  padding-top: 5px;
+  margin-bottom: 20px;
+  border-style: solid;
+  border-color: #dddddd;
+  border-width: 2px;
+}
+
+.expandable_row{
+  padding-bottom: 15px;  
+}
+
+
+/*#########################
+## Styles for the Drop Area
+#########################*/
+.dropZoneOverlay, .FileUpload {
+  width: 100%;
+  height: 50px !important;
+  border-radius: 10px !important;
+  border: 2px dashed rgb(0, 0, 0) !important;
+}
+
+.dropZoneOverlay {
+  border: dotted 1px;
+  /* background: url("../img/img_icon.png") no-repeat; */
+  position: absolute;
+  top: 0px;
+  text-align: center;
+}
+.dropZoneOverlay.background{
+  opacity: 0.65;
+}
+
+.FileUpload {
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.dropZoneText{
+  padding-left: 00%;
+  padding-top: 15%;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}

@@ -1,5 +1,5 @@
   import React from 'react';
-import './retrieval_page.css';
+import './icc_retrieval_page.css';
 import {Container, Row, Col} from 'react-bootstrap'
 
 // self defined components
@@ -9,7 +9,7 @@ import Text from './titles/text_display'
 import InputArea from "./inputs/input_area.js"
 import ResultsArea from "./results/results_area.js"
 
-class RetrievalPage extends React.Component{
+class IccRetrievalPage extends React.Component{
 
   constructor(props){
     super(props)
@@ -32,7 +32,7 @@ class RetrievalPage extends React.Component{
   render(){
     return (
       <div>
-        <Header title={"Pose-Based Image Retrieval Demo"}/>
+        <Header title={"Image Composition Retrieval Demo"}/>
         <Separator/>
         <Container className="App">
           <Row>
@@ -48,7 +48,7 @@ class RetrievalPage extends React.Component{
           <Row>
             <Separator/>
             <Col md={12}>
-              <Text text_display="by Angel Villar-Corrales" font_size="1.3em"/>
+              <Text text_display="by Prathmesh Madhu" font_size="1.3em"/>
             </Col>
           </Row>
         </Container>
@@ -57,4 +57,4 @@ class RetrievalPage extends React.Component{
   }
 }
 
-export default RetrievalPage;
+export default IccRetrievalPage;

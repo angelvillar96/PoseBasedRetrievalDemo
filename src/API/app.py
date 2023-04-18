@@ -13,6 +13,8 @@ from flasgger import Swagger
 
 from routes.home import home_api
 from routes.upload import upload_api
+from routes.upload_object import upload_object_api
+from routes.upload_icc import upload_icc_api
 from routes.retrieve import retrieve_api
 from routes.progress import progress_api
 from lib.logger import Logger, log_function, print_
@@ -33,6 +35,8 @@ def create_app():
 
     app.register_blueprint(home_api, url_prefix='/')
     app.register_blueprint(upload_api, url_prefix='/api/upload')
+    app.register_blueprint(upload_object_api, url_prefix='/api/upload_object')
+    app.register_blueprint(upload_icc_api, url_prefix='/api/upload_icc')
     app.register_blueprint(retrieve_api, url_prefix='/api/retrieve')
     app.register_blueprint(progress_api, url_prefix='/api/get_progress')
     app.run(debug=True,host='0.0.0.0')

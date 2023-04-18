@@ -12,6 +12,8 @@ import Separator from '../../components/separator/separator.js'
 import CustomCard from "../../components/card/card.js"
 import DetectionLogo from './imgs/DetectionDemo.png';
 import PoseEstimationLogo from './imgs/PoseEstimationDemo.png';
+import ObjectDetectionLogo from './imgs/ObjectDetectionDemo.png';
+import IccLogo from './imgs/IccDemo.png'
 
 class IndexPage extends React.Component{
 
@@ -20,28 +22,34 @@ class IndexPage extends React.Component{
     const card1 = <CustomCard title="Pose-Based Retrieval Demo" route="/pose-based-retrieval"
                    image={PoseEstimationLogo}
                    description='Retrieving images from different datasets based on the
-                                similiraty between the poses of the person instances.'/>
+                                similarity between the poses of the person instances.'/>
 
-    const card2 = <CustomCard title="Object Detection Demo" route="/"
+    const card2 = <CustomCard title="Person Detection Demo" route="/person-detection"
                    image={DetectionLogo}
-                   description='Detecting different relevant objects and actions in
-                                images from artistical and archeological datasets.'/>
+                   description='Detecting relevant persons in
+                                images from art-historical and archaeological datasets.'/>
+
+    const card3 = <CustomCard title="Object Detection Demo" route="/object-detection"
+                   image={ObjectDetectionLogo}
+                   description='Detecting relevant objects in
+                                images from art-historical and archaeological datasets.'/>
+
+    const card4 = <CustomCard title="Image Composition Demo" route="/icc-based-retrieval"
+                   image={IccLogo}
+                   description='Retrieving images from art history dataset based on the
+                   compositions in images.'/>
 
     return (
       <div>
         <Header title={"Digital Humanities Demos"}/>
         <Separator/>
-        <Container className="input_area">
+        <Container className="input_area" fluid>
           <Row fluid="true">
-            <Col sm={2}></Col>
-            <Col sm={4}>{card1}</Col>
             <Col sm={1}></Col>
-            <Col sm={4}>{card2}</Col>
-            <Col sm={1}></Col>
-          </Row>
-          <Row fluid="true">
-            <Col><div/></Col>
-            <Col><div/></Col>
+            <Col sm={2}>{card1}</Col>
+            <Col sm={2}>{card2}</Col>
+            <Col sm={2}>{card3}</Col>
+            <Col sm={2}>{card4}</Col>
           </Row>
         </Container>
       </div>

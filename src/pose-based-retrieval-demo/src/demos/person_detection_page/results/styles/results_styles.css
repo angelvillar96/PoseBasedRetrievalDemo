@@ -1,0 +1,17 @@
+
+.resultsTitle{
+  height: 100px;
+  text-align: center;
+  padding-top: 30px;
+  margin: auto;
+}
+
+.resultDisplay{
+  width: 100%;
+  height: 200px !important;
+  padding-top: 2% !important;
+  margin-left: 0%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
