@@ -118,6 +118,26 @@ class PoseLine:
         self.line = LineString([[top.x, top.y], [bottom.x, bottom.y]])
 
 
+def get_pose_triangle_hrnet(pose):
+    top_ixs = config["pose_abstraction"]["keypoint_list"]["top"]
+    left_ixs = config["pose_abstraction"]["keypoint_list"]["left"]
+    right_ixs = config["pose_abstraction"]["keypoint_list"]["right"]
+
+    top_kps = [pose[i] for i in top_ixs]
+    left_kps = [pose[i] for i in left_ixs]
+    right_kps = [pose[i] for i in right_ixs]
+
+    if (len(top_kps) == 0):
+        raise ValueError('missing valid top keypoints for triangle calculation!')
+    if (len(left_kps) == 0):
+        raise ValueError('missing valid left keypoints for triangle calculation!')
+        # raise AssertionError('missing valid left keypoints for triangle calculation!')
+    if (len(right_kps) == 0):
+        raise ValueError('missing valid right keypoints for triangle calculation!')
+
+    return [top_kps, left_kps, right_kps]
+
+
 def get_pose_triangle(pose: Pose) -> PoseTriangle:
     pose_keypoints = np.array(pose.keypoints, dtype=Keypoint)
     print(pose_keypoints)
@@ -145,6 +165,18 @@ def get_pose_triangle(pose: Pose) -> PoseTriangle:
 
     return PoseTriangle(top_keypoints[0], right_keypoints[0], left_keypoints[0])
 
+
+def get_pose_triangles_hrnet(poses):
+    pose_triangles = []
+    for pose in poses:
+        try:
+            triangle = get_pose_triangle(pose)
+            pose_triangles.append(triangle)
+        except ValueError as e:
+            # print(e)
+            pass
+    return pose_triangles
+
 def get_pose_triangles(poses: Poses) -> Sequence[PoseTriangle]:
     pose_triangles: Sequence[PoseTriangle] = []
     for pose in poses:
@@ -157,12 +189,22 @@ def get_pose_triangles(poses: Poses) -> Sequence[PoseTriangle]:
     return pose_triangles
 
 
+def get_pose_line_hrnet(triangle):
+    top_point = triangle[0]
+    bottom_point = [int(triangle[1][0] + triangle[2][0] / 2), int(triangle[1][1] + triangle[2][1] / 2)]
+    return [top_point, bottom_point]
+
 def get_pose_line(triangle: PoseTriangle) -> PoseLine:
     bottom_line = LineString([[triangle.left.x, triangle.left.y], [triangle.right.x, triangle.right.y]])
     top_point = Point(triangle.top.x, triangle.top.y)
     bottom_point = Point(bottom_line.centroid)
     return PoseLine(top_point, bottom_point)
 
+
+def get_pose_abstraction_hrnet(pose):
+    triangle = get_pose_triangle_hrnet(pose)
+    poseline = get_pose_line_hrnet(triangle)
+    return poseline
 
 def get_pose_abstraction(pose: Pose) -> PoseLine:
     # try:
@@ -180,6 +222,13 @@ def get_pose_lines_without_fallback(poses: Poses) -> Sequence[PoseLine]:
         except ValueError as e:
             # print(e)
             pass
+    return pose_lines
+
+def get_pose_lines_hrnet(poses):
+    pose_lines = []
+    for pose in poses:
+        pose_abstraction = get_pose_abstraction_hrnet(pose)
+        pose_lines.append(pose_abstraction)
     return pose_lines
 
 def get_pose_lines(poses: Poses, fallback=False) -> Sequence[PoseLine]:

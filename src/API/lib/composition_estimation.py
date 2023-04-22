@@ -22,7 +22,7 @@ from lib.neural_nets.EfficientDet import EfficientDetBackbone as EfficientDet
 from lib.neural_nets.HRNet import PoseHighResolutionNet
 from lib.utils import create_directory
 from lib.pose_parsing import get_final_preds_hrnet, get_max_preds_hrnet, create_pose_entries
-from lib.pose_utils import hrnet_to_compoelem_poses, get_pose_lines
+from lib.pose_utils import hrnet_to_compoelem_poses, get_pose_lines, get_pose_lines_hrnet
 
 DETECTOR_NAME = None
 DETECTOR = None
@@ -218,12 +218,15 @@ def composition_estimation(img_path, person_detector, keypoint_detector, databas
     all_keypoints = [all_keypoints[:, 1], all_keypoints[:, 0], \
                      all_keypoints[:, 2], all_keypoints[:, 3]]
     all_keypoints = np.array(all_keypoints).T
+    # all_individual_keypoints = np.split(all_keypoints, int(len(all_keypoints)/17))
+    # print(f"All keypoints are: {all_keypoints}")
+    # # print(f"All individual keypoints array is {all_individual_keypoints}")
 
-    print_(all_keypoints)
-    all_keypoints_hrnet = hrnet_to_compoelem_poses(all_keypoints)
-    print_(all_keypoints_hrnet)
-    all_poselines = get_pose_lines(all_keypoints_hrnet)
-    print_(all_poselines)
+    # print_(all_keypoints)
+    # all_keypoints_hrnet = hrnet_to_compoelem_poses(all_keypoints)
+    # print_(all_keypoints_hrnet)
+    # all_poselines = get_pose_lines_hrnet(all_individual_keypoints)
+    # print_(all_poselines)
 
     # creating pose visualizations and saving in the corresponding directory
     img_name = os.path.basename(img_path)
