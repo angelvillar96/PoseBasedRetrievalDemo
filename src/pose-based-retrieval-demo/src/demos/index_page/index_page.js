@@ -24,20 +24,20 @@ class IndexPage extends React.Component{
                    description='Retrieving images from different datasets based on the
                                 similarity between the poses of the person instances.'/>
 
-    const card2 = <CustomCard title="Person Detection Demo" route="/person-detection"
-                   image={DetectionLogo}
-                   description='Detecting relevant persons in
-                                images from art-historical and archaeological datasets.'/>
+    // const card2 = <CustomCard title="Person Detection Demo" route="/person-detection"
+    //                image={DetectionLogo}
+    //                description='Detecting relevant persons in
+    //                             images from art-historical and archaeological datasets.'/>
 
-    const card3 = <CustomCard title="Object Detection Demo" route="/object-detection"
-                   image={ObjectDetectionLogo}
-                   description='Detecting relevant objects in
-                                images from art-historical and archaeological datasets.'/>
+    // const card3 = <CustomCard title="Object Detection Demo" route="/object-detection"
+    //                image={ObjectDetectionLogo}
+    //                description='Detecting relevant objects in
+    //                             images from art-historical and archaeological datasets.'/>
 
-    const card4 = <CustomCard title="Image Composition Demo" route="/icc-based-retrieval"
-                   image={IccLogo}
-                   description='Retrieving images from art history dataset based on the
-                   compositions in images.'/>
+    // const card4 = <CustomCard title="Image Composition Demo" route="/icc-based-retrieval"
+    //                image={IccLogo}
+    //                description='Retrieving images from art history dataset based on the
+    //                compositions in images.'/>
 
     return (
       <div>
@@ -47,9 +47,9 @@ class IndexPage extends React.Component{
           <Row fluid="true">
             <Col sm={1}></Col>
             <Col sm={2}>{card1}</Col>
-            <Col sm={2}>{card2}</Col>
+            {/* <Col sm={2}>{card2}</Col>
             <Col sm={2}>{card3}</Col>
-            <Col sm={2}>{card4}</Col>
+            <Col sm={2}>{card4}</Col> */}
           </Row>
         </Container>
       </div>

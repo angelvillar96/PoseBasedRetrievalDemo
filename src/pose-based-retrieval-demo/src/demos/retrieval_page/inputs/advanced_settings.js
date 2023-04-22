@@ -33,11 +33,11 @@ class AdvancedSettings extends React.Component{
 
     var title = <span>{this.state.icon}  Advanced Settings </span>
 
-    const person_detectors = ["Faster R-CNN", "EfficientDet", "Tuned R-CNN"]
+    const person_detectors = ["Faster R-CNN", "Tuned R-CNN"]
     const keypoint_detectors = ["Baseline HRNet", "Styled HRNet", "Tuned HRNet"]
     const retrieval_methods = ["Approx. kNN", "Euclidean Distance",
                                "Weighted Confidence Score", "Object Keypoint Similarity"]
-    const retrieval_databases = ["MS-COCO", "Styled-COCO", "Arch-Data"]
+    const retrieval_databases =  ["Christian Arch"]// ["MS-COCO", "Styled-COCO", "Arch-Data"]
 
     return(
       <Collapsible trigger={title} className="advanced_settings"

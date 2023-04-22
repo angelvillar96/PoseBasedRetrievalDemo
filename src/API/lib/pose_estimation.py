@@ -135,7 +135,7 @@ def pose_estimation(detections, centers, scales, img_path, keypoint_detector):
     all_keypoints = [all_keypoints[:, 1], all_keypoints[:, 0],\
                      all_keypoints[:, 2], all_keypoints[:, 3]]
     all_keypoints = np.array(all_keypoints).T
-    print(f"All keypoints are: {all_keypoints}")
+    # print(f"All keypoints are: {all_keypoints}")
 
     # creating pose visualizations and saving in the corresponding directory
     img_name = os.path.basename(img_path)

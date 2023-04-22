@@ -48,7 +48,7 @@ class RetrievalPage extends React.Component{
           <Row>
             <Separator/>
             <Col md={12}>
-              <Text text_display="by Angel Villar-Corrales" font_size="1.3em"/>
+              <Text text_display="by Pattern Recognition Lab, FAU" font_size="1.3em"/>
             </Col>
           </Row>
         </Container>

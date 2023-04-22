@@ -16,9 +16,9 @@ ReactDOM.render((
   <BrowserRouter>
       <Switch>
           <Route exact path="/pose-based-retrieval" component={RetrievalPage}/>
-          <Route exact path="/person-detection" component={PersonDetectionPage}/>
-          <Route exact path="/object-detection" component={ObjectDetectionPage}/>
-          <Route exact path="/icc-based-retrieval" component={IccRetrievalPage}/>
+          {/* <Route exact path="/person-detection" component={PersonDetectionPage}/> */}
+          {/* <Route exact path="/object-detection" component={ObjectDetectionPage}/> */}
+          {/* <Route exact path="/icc-based-retrieval" component={IccRetrievalPage}/> */}
         <Route path="/" component={IndexPage}/>
       </Switch>
     </BrowserRouter>),

@@ -99,9 +99,9 @@ class InputArea extends React.Component{
     // establishing connection, sending and awaiting response
     axios({
       method: 'post',
-//       url: 'http://localhost:5000/api/upload_object/',
+       url: 'http://localhost:5000/api/upload_object/',
 //       url: "http://131.188.35.240:5000/api/upload_object/",
-      url: 'http://131.188.35.181:5000/api/upload_object/',
+//      url: 'http://131.188.35.181:5000/api/upload_object/',
       data: formData,
       headers: {'content-type': 'multipart/form-data',
                 "Accept": "application/json"}
