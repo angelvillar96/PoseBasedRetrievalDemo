@@ -30,7 +30,7 @@ class InputArea extends React.Component{
         pose_vectors: "",
         keypoints: "",
         // retrieval_properties
-        person_detector: "Faster R-CNN",
+        person_detector: "Tuned R-CNN",
         keypoint_detector: "Baseline HRNet",
         retrieval_method: "Approx. kNN",
         retrieval_database: "Christian Arch",

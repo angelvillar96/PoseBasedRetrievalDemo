@@ -25,7 +25,7 @@ KEYS = None         # image names, corresponding to the keys of the DB-dictionar
 
 
 @log_function
-def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['arch_data']", approach="full_body",
+def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name=['Christian Arch'], approach="full_body",
                          retrieval_method="euclidean_distance", penalization=None,
                          normalize=True, num_retrievals=10):
     """
@@ -46,6 +46,8 @@ def pose_based_retrieval(kpt_idx, all_keypoints, dataset_name="['arch_data']", a
     keypoints = [keypoints[:, 1], keypoints[:, 0], keypoints[:, 2]]
     keypoints = np.array(keypoints).T
     pose_vector = process_pose_vector(vector=keypoints, approach=approach, normalize=True)
+    if dataset_name == ['Christian Arch']:
+        dataset_name = ['arch_data']
 
     # loading knn if necessary
     global KNN

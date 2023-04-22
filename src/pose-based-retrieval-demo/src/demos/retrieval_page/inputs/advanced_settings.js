@@ -33,10 +33,10 @@ class AdvancedSettings extends React.Component{
 
     var title = <span>{this.state.icon}  Advanced Settings </span>
 
-    const person_detectors = ["Faster R-CNN", "Tuned R-CNN"]
-    const keypoint_detectors = ["Baseline HRNet", "Styled HRNet", "Tuned HRNet"]
-    const retrieval_methods = ["Approx. kNN", "Euclidean Distance",
-                               "Weighted Confidence Score", "Object Keypoint Similarity"]
+    const person_detectors = ["Tuned R-CNN", "Faster R-CNN"]
+    const keypoint_detectors = ["Tuned HRNet", "Baseline HRNet", "Styled HRNet"]
+    const retrieval_methods = ["Object Keypoint Similarity", "Approx. kNN", 
+                                "Euclidean Distance", "Weighted Confidence Score"]
     const retrieval_databases =  ["Christian Arch"]// ["MS-COCO", "Styled-COCO", "Arch-Data"]
 
     return(
